@@ -400,6 +400,24 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
   .svc-grid .svc-mommy { background-position: center 70% !important; }
   .svc-grid .svc-postwl { background-position:  10% 100% !important; background-size: 170% !important; }
   .svc-grid .svc-rhino { background-position: center 100% !important; background-size: 170% !important; }
+  .svc-label {
+    right: 50% !important;
+    left: auto !important;
+    transform: translate(50%, -50%) !important;
+    text-align: center !important;
+  }
+  .svc-tall .svc-label {
+    top: 68% !important;
+  }
+  .svc-mommy .svc-label {
+    top: 68% !important;
+  }
+  .svc-rhino .svc-label {
+    top: 57% !important;
+  }
+  .svc-postwl .svc-label {
+    top: 57% !important;
+  }
 }
 
 /* ---------- BEFORE / AFTER ---------- */
@@ -1153,7 +1171,7 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
     <a class="svc svc-tall" data-reveal="scale" style="--img:url('assets/service-facelift.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-facelift_OLD.png" data-svc-title="Facelift &amp; Neck Lift" data-svc-desc="Restore a youthful, refreshed appearance by tightening and redefining facial contours with natural-looking results." data-svc-hl="Natural lifting results|Defined jawline|Long-lasting outcome" data-svc-title-ar="شد الوجه والرقبة" data-svc-desc-ar="استعادة مظهر شبابي ومنتعش من خلال شد وإعادة تحديد ملامح الوجه بنتائج طبيعية." data-svc-hl-ar="نتائج شد طبيعية|فك محدد|نتائج طويلة الأمد">
       <span class="svc-label" style="top:62%" data-i18n="svc.facelift">Facelift &amp;<br>Neck Lift</span>
     </a>
-    <a class="svc svc-mommy" data-reveal="scale" style="--img:url('assets/service-mommy-makeover.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-mommy-makeover_OLD.png" data-svc-title="Mommy Makeover" data-svc-desc="A customized combination of procedures designed to restore your body after pregnancy with safe, refined results." data-svc-hl="Personalized treatment plan|Full body restoration|Natural results" data-svc-title-ar="تجميل ما بعد الولادة" data-svc-desc-ar="مجموعة مخصصة من الإجراءات المصممة لاستعادة جسمك بعد الحمل بنتائج آمنة ومتقنة." data-svc-hl-ar="خطة علاج مخصصة|استعادة شاملة للجسم|نتائج طبيعية">
+    <a class="svc svc-mommy" data-reveal="scale" style="--img:url('assets/service-mommy-makeover.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-mommy-makeover_OLD.png" data-svc-title="Mommy Makeover" data-svc-desc="A customized combination of procedures designed to restore your body after pregnancy with safe, refined results." data-svc-hl="Personalized treatment plan|Full body restoration|Natural results" data-svc-title-ar="تجميل  بعد الولادة" data-svc-desc-ar="مجموعة مخصصة من الإجراءات المصممة لاستعادة جسمك بعد الحمل بنتائج آمنة ومتقنة." data-svc-hl-ar="خطة علاج مخصصة|استعادة شاملة للجسم|نتائج طبيعية">
       <span class="svc-label" style="top:53%; transform:translate(-50%,50%); text-align:center" data-i18n="svc.mommy">Mommy<br>Makeover</span>
     </a>
 
@@ -1167,7 +1185,7 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
 
     <!-- Row 3 -->
     <a class="svc svc-postwl" data-reveal="scale" style="--img:url('assets/service-weight-loss.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-weight-loss_OLD.png" data-svc-title="Post-Weight-Loss Surgery" data-svc-desc="Remove excess skin and reshape the body after significant weight loss for a smoother, firmer appearance." data-svc-hl="Skin tightening|Improved body shape|Confidence boost" data-svc-title-ar="جراحة ما بعد فقدان الوزن" data-svc-desc-ar="إزالة الجلد الزائد وإعادة تشكيل الجسم بعد فقدان الوزن الكبير للحصول على مظهر أكثر نعومة وشداً." data-svc-hl-ar="شد الجلد|تحسين شكل الجسم|تعزيز الثقة">
-      <span class="svc-label" style="top:73%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.postwl">Post-Weight-Loss Surgery</span>
+      <span class="svc-label" style="top:73%; right:50%; transform:translate(50%,-50%); text-align:center; white-space:nowrap" data-i18n="svc.postwl">Post-Weight-Loss<br>Surgery</span>
     </a>
     <a class="svc svc-rhino" data-reveal="scale" style="--img:url('assets/service-rhinoplasty.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-rhinoplasty_OLD.png" data-svc-title="Rhinoplasty" data-svc-desc="Refine the shape of the nose while maintaining facial harmony and natural balance." data-svc-hl="Facial harmony|Precise reshaping|Natural outcome" data-svc-title-ar="تجميل الأنف" data-svc-desc-ar="تحسين شكل الأنف مع الحفاظ على تناسق الوجه والتوازن الطبيعي." data-svc-hl-ar="تناسق الوجه|إعادة تشكيل دقيقة|نتيجة طبيعية">
       <span class="svc-label" style="top:73%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.rhino">Rhinoplasty</span>
@@ -1566,7 +1584,7 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       'svcModal.hlTitle': 'أبرز المميزات:',
       'svcModal.cta': 'احجز استشارة',
       'svc.facelift': 'شد الوجه<br>والرقبة',
-      'svc.mommy': 'تجميل ما بعد<br>الولادة',
+      'svc.mommy': 'تجميل بعد<br>الولادة',
       'svc.lipo': 'شفط الدهون<br>ونحت الجسم',
       'svc.breast': 'تكبير<br>وشد الثدي',
       'svc.postwl': 'جراحة ما بعد<br>فقدان الوزن',
