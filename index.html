@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dr. Moamen Bakr — Consultant Plastic Surgeon, Riyadh</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
 :root {
   font-size: 62.5%;
@@ -120,6 +121,89 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 .nav-links a:hover { color: #fff; }
 .brand-mark { display: inline-flex; align-items: center; }
 .brand-logo { width: 58px; height: 58px; object-fit: contain; }
+
+/* ---------- LANG TOGGLE ---------- */
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(255,255,255,0.12);
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.lang-toggle button {
+  border: none;
+  background: transparent;
+  color: var(--text-white-soft);
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 1.3rem;
+  font-weight: 500;
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.lang-toggle button.active {
+  background: rgba(255,255,255,0.22);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) { color: #fff; }
+
+/* ---------- RTL SUPPORT ---------- */
+html[dir="rtl"] body {
+  font-family: 'Noto Sans Arabic', var(--font-sans);
+  letter-spacing: 0;
+}
+html[dir="rtl"] .hero-title,
+html[dir="rtl"] .section-title-serif,
+html[dir="rtl"] .testi-title,
+html[dir="rtl"] .contact-title,
+html[dir="rtl"] .cta-title,
+html[dir="rtl"] .wa-modal h3,
+html[dir="rtl"] .svc-modal-title,
+html[dir="rtl"] .why-body h3,
+html[dir="rtl"] .contact-label {
+  font-family: 'Noto Sans Arabic', var(--font-serif);
+  letter-spacing: 0;
+}
+html[dir="rtl"] .hero-sub,
+html[dir="rtl"] .about-lede,
+html[dir="rtl"] .testi-body,
+html[dir="rtl"] .svc-modal-desc,
+html[dir="rtl"] .contact-form input,
+html[dir="rtl"] .contact-form textarea {
+  font-family: 'Noto Sans Arabic', var(--font-serif);
+}
+html[dir="rtl"] .about-photo {
+  border-radius: 36px 0 0 36px;
+}
+html[dir="rtl"] .about {
+  padding: 0 0 0 40px;
+}
+html[dir="rtl"] .about-copy {
+  padding: 80px 40px 80px 40px;
+}
+html[dir="rtl"] .svc-modal-title {
+  right: auto; left: 24px;
+  text-align: left;
+}
+html[dir="rtl"] .wa-features {
+  text-align: right;
+}
+html[dir="rtl"] .send-btn {
+  grid-column: 1;
+  justify-self: start;
+}
+html[dir="rtl"] .pill i { transform: scaleX(-1); }
+@media (max-width: 900px) {
+  html[dir="rtl"] .about { padding: 0; }
+  html[dir="rtl"] .about-photo { border-radius: 0; }
+  html[dir="rtl"] .about-copy { padding: 48px 24px; }
+}
+
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .nav { padding: 12px 20px; }
@@ -220,11 +304,12 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
   background: url('assets/surgery-about.png') center/cover;
   border-radius: 0 36px 36px 0;
   margin: 40px 0;
-  margin-right: 40px;
+  /* margin-right: 40px; */
+  /* margin-left: 40px; */
   position: relative;
 }
 .about-copy {
-  padding: 80px 40px 80px 0;
+  padding: 80px 40px 80px 40px;
   color: #fff;
   max-width: 620px;
 }
@@ -294,6 +379,18 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
   align-items: center;
   justify-content: flex-start;
   box-shadow: var(--shadow-card);
+}
+.svc-label {
+  position: absolute;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Optima', 'Segoe UI', 'Candara', sans-serif;
+  font-weight: 400;
+  font-size: 4rem;
+  color: #303c36;
+  line-height: 1.2;
+  pointer-events: none;
 }
 
 @media (max-width: 900px) {
@@ -958,6 +1055,16 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 
 </style>
 <script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  // Early language direction to prevent layout flash
+  (function() {
+    var lang = localStorage.getItem('site-lang');
+    if (lang === 'ar') {
+      document.documentElement.setAttribute('lang', 'ar');
+      document.documentElement.setAttribute('dir', 'rtl');
+    }
+  })();
+</script>
 </head>
 <body>
 
@@ -976,30 +1083,36 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
     </span>
   </a>
   <nav class="nav-links" aria-label="Sections">
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#results">Results</a>
-    <a href="#why">Why us</a>
-    <a href="#contact">Contact</a>
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#services" data-i18n="nav.services">Services</a>
+    <a href="#results" data-i18n="nav.results">Results</a>
+    <a href="#why" data-i18n="nav.why">Why us</a>
+    <a href="#contact" data-i18n="nav.contactLink">Contact</a>
   </nav>
-  <a class="pill pill-gold" href="#contact">
-    Contact Us <i data-lucide="arrow-up-right"></i>
-  </a>
+  <div class="nav-actions">
+    <div class="lang-toggle" id="langToggle">
+      <button data-lang="en" class="active">EN</button>
+      <button data-lang="ar">عربي</button>
+    </div>
+    <a class="pill pill-gold" href="#contact">
+      <span data-i18n="nav.contact">Contact Us</span> <i data-lucide="arrow-up-right"></i>
+    </a>
+  </div>
 </header>
 
 <!-- ========================= HERO ========================= -->
 <section class="hero" id="top">
   <div class="hero-inner">
     <div class="hero-copy">
-      <h1 class="hero-title" data-reveal="up">
+      <h1 class="hero-title" data-reveal="up" data-i18n="hero.title">
         Redefining Confidence<br>
         Through Precision &amp; Expertise
       </h1>
-      <p class="hero-sub" data-reveal="up">
+      <p class="hero-sub" data-reveal="up" data-i18n="hero.sub">
         Led by <strong>Dr. Moamen Bakr</strong>, a consultant plastic surgeon with over 14
         years of experience, delivering natural, refined, and safe results.
       </p>
-      <a class="pill pill-dark hero-cta" data-reveal="up" href="#" onclick="openWaModal(event)">
+      <a class="pill pill-dark hero-cta" data-reveal="up" href="#" onclick="openWaModal(event)" data-i18n="hero.cta">
         Book Consultation
       </a>
     </div>
@@ -1008,11 +1121,11 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
     </div>
   </div>
   <div class="hero-strip" data-reveal="up">
-    <span>14+ Years Experience</span>
+    <span data-i18n="hero.strip1">14+ Years Experience</span>
     <span class="dot-sep" aria-hidden="true"></span>
-    <span>Consultant Surgeon</span>
+    <span data-i18n="hero.strip2">Consultant Surgeon</span>
     <span class="dot-sep" aria-hidden="true"></span>
-    <span>International Experience</span>
+    <span data-i18n="hero.strip3">International Experience</span>
   </div>
 </section>
 
@@ -1020,38 +1133,44 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 <section class="about" id="about">
   <div class="about-photo" data-reveal="left" role="img" aria-label="Dr. Moamen Bakr performing surgery"></div>
   <div class="about-copy">
-    <h2 class="section-title-serif light" data-reveal="right">About Dr. Moamen Bakr</h2>
-    <p class="about-lede" data-reveal="right">
+    <h2 class="section-title-serif light" data-reveal="right" data-i18n="about.title">About Dr. Moamen Bakr</h2>
+    <p class="about-lede" data-reveal="right" data-i18n="about.lede">
       <strong>Dr. Moamen Bakr</strong> is a Consultant Plastic Surgeon with over 14 years of
       experience, known for delivering natural, refined results. Combining advanced
       surgical precision with a patient-focused approach, he specializes in both
       aesthetic and reconstructive procedures.
     </p>
-    <p class="about-tag" data-reveal="right">PRECISION. SAFETY. NATURAL RESULTS.</p>
+    <p class="about-tag" data-reveal="right" data-i18n="about.tag">PRECISION. SAFETY. NATURAL RESULTS.</p>
   </div>
 </section>
 
 <!-- ========================= SERVICES ========================= -->
 <section class="services" id="services">
-  <h2 class="section-title-serif center" data-reveal="up">OUR SERVICES</h2>
+  <h2 class="section-title-serif center" data-reveal="up" data-i18n="services.title">OUR SERVICES</h2>
 
   <div class="svc-grid" data-reveal-stagger>
     <!-- Row 1 -->
-    <a class="svc svc-tall" data-reveal="scale" style="--img:url('assets/service-facelift.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-facelift_OLD.png" data-svc-title="Facelift &amp; Neck Lift" data-svc-desc="Restore a youthful, refreshed appearance by tightening and redefining facial contours with natural-looking results." data-svc-hl="Natural lifting results|Defined jawline|Long-lasting outcome">
+    <a class="svc svc-tall" data-reveal="scale" style="--img:url('assets/service-facelift.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-facelift_OLD.png" data-svc-title="Facelift &amp; Neck Lift" data-svc-desc="Restore a youthful, refreshed appearance by tightening and redefining facial contours with natural-looking results." data-svc-hl="Natural lifting results|Defined jawline|Long-lasting outcome" data-svc-title-ar="شد الوجه والرقبة" data-svc-desc-ar="استعادة مظهر شبابي ومنتعش من خلال شد وإعادة تحديد ملامح الوجه بنتائج طبيعية." data-svc-hl-ar="نتائج شد طبيعية|فك محدد|نتائج طويلة الأمد">
+      <span class="svc-label" style="top:62%" data-i18n="svc.facelift">Facelift &amp;<br>Neck Lift</span>
     </a>
-    <a class="svc svc-mommy" data-reveal="scale" style="--img:url('assets/service-mommy-makeover.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-mommy-makeover_OLD.png" data-svc-title="Mommy Makeover" data-svc-desc="A customized combination of procedures designed to restore your body after pregnancy with safe, refined results." data-svc-hl="Personalized treatment plan|Full body restoration|Natural results">
+    <a class="svc svc-mommy" data-reveal="scale" style="--img:url('assets/service-mommy-makeover.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-mommy-makeover_OLD.png" data-svc-title="Mommy Makeover" data-svc-desc="A customized combination of procedures designed to restore your body after pregnancy with safe, refined results." data-svc-hl="Personalized treatment plan|Full body restoration|Natural results" data-svc-title-ar="تجميل ما بعد الولادة" data-svc-desc-ar="مجموعة مخصصة من الإجراءات المصممة لاستعادة جسمك بعد الحمل بنتائج آمنة ومتقنة." data-svc-hl-ar="خطة علاج مخصصة|استعادة شاملة للجسم|نتائج طبيعية">
+      <span class="svc-label" style="top:53%; transform:translate(-50%,50%); text-align:center" data-i18n="svc.mommy">Mommy<br>Makeover</span>
     </a>
 
     <!-- Row 2 -->
-    <a class="svc svc-lipo" data-reveal="scale" style="--img:url('assets/service-body-contouring.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-body-contouring_OLD.png" data-svc-title="Liposuction &amp; Body Contouring" data-svc-desc="Sculpt and refine your body shape by removing stubborn fat and enhancing natural proportions." data-svc-hl="Targeted fat removal|Smooth body contours|Minimal downtime">
+    <a class="svc svc-lipo" data-reveal="scale" style="--img:url('assets/service-body-contouring.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-body-contouring_OLD.png" data-svc-title="Liposuction &amp; Body Contouring" data-svc-desc="Sculpt and refine your body shape by removing stubborn fat and enhancing natural proportions." data-svc-hl="Targeted fat removal|Smooth body contours|Minimal downtime" data-svc-title-ar="شفط الدهون ونحت الجسم" data-svc-desc-ar="نحت وتحسين شكل الجسم عن طريق إزالة الدهون العنيدة وتعزيز التناسق الطبيعي." data-svc-hl-ar="إزالة دهون مستهدفة|ملامح جسم ناعمة|فترة تعافي قصيرة">
+      <span class="svc-label" style="top:57%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.lipo">Liposuction &amp; Body Contouring</span>
     </a>
-    <a class="svc svc-breast" data-reveal="scale" style="--img:url('assets/service-breast.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-breast_OLD.png" data-svc-title="Breast Augmentation &amp; Lift" data-svc-desc="Enhance shape, volume, and symmetry with advanced techniques tailored to your goals." data-svc-hl="Natural proportions|Improved symmetry|Long-lasting results">
+    <a class="svc svc-breast" data-reveal="scale" style="--img:url('assets/service-breast.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-breast_OLD.png" data-svc-title="Breast Augmentation &amp; Lift" data-svc-desc="Enhance shape, volume, and symmetry with advanced techniques tailored to your goals." data-svc-hl="Natural proportions|Improved symmetry|Long-lasting results" data-svc-title-ar="تكبير وشد الثدي" data-svc-desc-ar="تحسين الشكل والحجم والتناسق بتقنيات متقدمة مصممة وفقاً لأهدافك." data-svc-hl-ar="تناسق طبيعي|تحسين التماثل|نتائج طويلة الأمد">
+      <span class="svc-label" style="top:57%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.breast">Breast<br>Augmentation &amp; Lift</span>
     </a>
 
     <!-- Row 3 -->
-    <a class="svc svc-postwl" data-reveal="scale" style="--img:url('assets/service-weight-loss.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-weight-loss_OLD.png" data-svc-title="Post-Weight-Loss Surgery" data-svc-desc="Remove excess skin and reshape the body after significant weight loss for a smoother, firmer appearance." data-svc-hl="Skin tightening|Improved body shape|Confidence boost">
+    <a class="svc svc-postwl" data-reveal="scale" style="--img:url('assets/service-weight-loss.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-weight-loss_OLD.png" data-svc-title="Post-Weight-Loss Surgery" data-svc-desc="Remove excess skin and reshape the body after significant weight loss for a smoother, firmer appearance." data-svc-hl="Skin tightening|Improved body shape|Confidence boost" data-svc-title-ar="جراحة ما بعد فقدان الوزن" data-svc-desc-ar="إزالة الجلد الزائد وإعادة تشكيل الجسم بعد فقدان الوزن الكبير للحصول على مظهر أكثر نعومة وشداً." data-svc-hl-ar="شد الجلد|تحسين شكل الجسم|تعزيز الثقة">
+      <span class="svc-label" style="top:73%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.postwl">Post-Weight-Loss Surgery</span>
     </a>
-    <a class="svc svc-rhino" data-reveal="scale" style="--img:url('assets/service-rhinoplasty.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-rhinoplasty_OLD.png" data-svc-title="Rhinoplasty" data-svc-desc="Refine the shape of the nose while maintaining facial harmony and natural balance." data-svc-hl="Facial harmony|Precise reshaping|Natural outcome">
+    <a class="svc svc-rhino" data-reveal="scale" style="--img:url('assets/service-rhinoplasty.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-rhinoplasty_OLD.png" data-svc-title="Rhinoplasty" data-svc-desc="Refine the shape of the nose while maintaining facial harmony and natural balance." data-svc-hl="Facial harmony|Precise reshaping|Natural outcome" data-svc-title-ar="تجميل الأنف" data-svc-desc-ar="تحسين شكل الأنف مع الحفاظ على تناسق الوجه والتوازن الطبيعي." data-svc-hl-ar="تناسق الوجه|إعادة تشكيل دقيقة|نتيجة طبيعية">
+      <span class="svc-label" style="top:73%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.rhino">Rhinoplasty</span>
     </a>
   </div>
 </section>
@@ -1060,8 +1179,8 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 <section class="results" id="results">
   <div class="results-inner">
     <div class="results-copy" data-reveal="left">
-      <h2 class="section-title-serif light">BEFORE &amp; AFTER<br>/ RESULTS</h2>
-      <p>
+      <h2 class="section-title-serif light" data-i18n="results.title">BEFORE &amp; AFTER<br>/ RESULTS</h2>
+      <p data-i18n="results.desc">
         Every result reflects a personalized approach,
         combining medical expertise with an artistic eye to
         achieve natural, harmonious outcomes.
@@ -1072,7 +1191,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
       <div class="compare-frame">
         <div class="compare-img ba-composite" style="background-image:url('assets/before-after.png')"></div>
         <a class="pill pill-glass view-case" href="#">
-          View Case <i data-lucide="arrow-right"></i>
+          <span data-i18n="results.viewCase">View Case</span> <i data-lucide="arrow-right"></i>
         </a>
       </div>
     </div>
@@ -1084,23 +1203,23 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 
 <!-- ========================= WHY CHOOSE US ========================= -->
 <section class="why" id="why">
-  <h2 class="section-title-serif center" data-reveal="up">WHY CHOOSE US</h2>
+  <h2 class="section-title-serif center" data-reveal="up" data-i18n="why.title">WHY CHOOSE US</h2>
   <div class="why-grid" data-reveal-stagger>
     <article class="why-card" data-reveal="up">
       <div class="why-ic"><i data-lucide="award"></i></div>
-      <div class="why-body"><h3>Extensive Experience<br>&amp; Proven Expertise</h3></div>
+      <div class="why-body"><h3 data-i18n="why.card1">Extensive Experience<br>&amp; Proven Expertise</h3></div>
     </article>
     <article class="why-card" data-reveal="up">
       <div class="why-ic"><i data-lucide="user-round"></i></div>
-      <div class="why-body"><h3>Personalized<br>Treatment Approach</h3></div>
+      <div class="why-body"><h3 data-i18n="why.card2">Personalized<br>Treatment Approach</h3></div>
     </article>
     <article class="why-card" data-reveal="up">
       <div class="why-ic"><i data-lucide="microscope"></i></div>
-      <div class="why-body"><h3>Advanced Techniques <br>&amp; Modern Technology</h3></div>
+      <div class="why-body"><h3 data-i18n="why.card3">Advanced Techniques <br>&amp; Modern Technology</h3></div>
     </article>
     <article class="why-card" data-reveal="up">
       <div class="why-ic"><i data-lucide="shield-check"></i></div>
-      <div class="why-body"><h3>Commitment to Safety<br>&amp; Natural Results</h3></div>
+      <div class="why-body"><h3 data-i18n="why.card4">Commitment to Safety<br>&amp; Natural Results</h3></div>
     </article>
   </div>
 </section>
@@ -1111,7 +1230,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
   <div class="quote-bg-lg right" aria-hidden="true">"</div>
 
   <div class="testi-card" id="testiCard" data-reveal="scale">
-    <h3 class="testi-title">What Our Patients Say</h3>
+    <h3 class="testi-title" data-i18n="testi.title">What Our Patients Say</h3>
     <p class="testi-body" id="testiBody">
       Professional, honest, and the results exceeded my expectations. I felt
       confident and well taken care of throughout the entire journey.
@@ -1126,35 +1245,35 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 <!-- ========================= CTA STRIP ========================= -->
 <section class="cta-strip">
   <div class="cta-copy" data-reveal="left">
-    <h2 class="cta-title"><em>Start Your Transformation<br>Today .</em>
-      <span class="cta-sub">Book your consultation and take the first step</span>
+    <h2 class="cta-title"><em data-i18n="cta.title">Start Your Transformation<br>Today .</em>
+      <span class="cta-sub" data-i18n="cta.sub">Book your consultation and take the first step</span>
     </h2>
   </div>
-  <a class="pill pill-gold cta-btn" data-reveal="right" href="#" onclick="openWaModal(event)">Book Consultation</a>
+  <a class="pill pill-gold cta-btn" data-reveal="right" href="#" onclick="openWaModal(event)" data-i18n="cta.btn">Book Consultation</a>
 </section>
 
 <!-- ========================= CONTACT ========================= -->
 <footer class="contact" id="contact">
   <div class="contact-inner">
     <div class="contact-info" data-reveal="left">
-      <h2 class="contact-title">Get in Touch</h2>
-      <p class="contact-sub">Our team is ready to assist you and answer all your inquiries.</p>
+      <h2 class="contact-title" data-i18n="contact.title">Get in Touch</h2>
+      <p class="contact-sub" data-i18n="contact.sub">Our team is ready to assist you and answer all your inquiries.</p>
 
       <div class="contact-grid">
         <div>
-          <div class="contact-label">Call Center</div>
+          <div class="contact-label" data-i18n="contact.callLabel">Call Center</div>
           <div class="contact-val">0550840229</div>
         </div>
         <div>
-          <div class="contact-label">Our Location</div>
-          <div class="contact-val">Riyadh, Saudi Arabia</div>
+          <div class="contact-label" data-i18n="contact.locationLabel">Our Location</div>
+          <div class="contact-val" data-i18n="contact.locationVal">Riyadh, Saudi Arabia</div>
         </div>
         <div>
-          <div class="contact-label">Email</div>
+          <div class="contact-label" data-i18n="contact.emailLabel">Email</div>
           <div class="contact-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="04602a696b3669616a666f76446369656d682a676b69">[email&#160;protected]</a></div>
         </div>
         <div>
-          <div class="contact-label">Social network</div>
+          <div class="contact-label" data-i18n="contact.socialLabel">Social network</div>
           <div class="contact-socials">
             <a aria-label="Instagram" href="#"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5Zm4.25 3a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm5.75-.88a1.13 1.13 0 1 1 0 2.25 1.13 1.13 0 0 1 0-2.25Z"/></svg></a>
             <a aria-label="Snapchat" href="#"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.63 0 4.47.86 5.54 2.56.7 1.1.96 2.36.96 4.24v1.4c.94.14 1.5.58 1.5 1.1 0 .56-.64 1.02-1.68 1.14-.28 1.3-.92 2.34-1.88 3.12-.6.5-1.26.84-1.68 1.02.06.28.2.52.44.72.32.26.74.42 1.22.5.62.1 1.3.16 1.78.54.34.28.5.64.5 1.06 0 1.06-2.06 1.78-3.86 1.98-.18.22-.28.58-.54.98-.3.5-.72.64-1.3.64-.34 0-.76-.08-1.3-.24a7.5 7.5 0 0 0-1.7-.28c-.58 0-1.12.1-1.7.28-.54.16-.96.24-1.3.24-.58 0-1-.14-1.3-.64-.26-.4-.36-.76-.54-.98C5.36 21.38 3.3 20.66 3.3 19.6c0-.42.16-.78.5-1.06.48-.38 1.16-.44 1.78-.54.48-.08.9-.24 1.22-.5.24-.2.38-.44.44-.72-.42-.18-1.08-.52-1.68-1.02-.96-.78-1.6-1.82-1.88-3.12C2.64 12.52 2 12.06 2 11.5c0-.52.56-.96 1.5-1.1v-1.4c0-1.88.26-3.14.96-4.24C5.53 2.86 7.37 2 12 2Z"/></svg></a>
@@ -1168,20 +1287,20 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
       <input type="hidden" name="access_key" value="ee8c6e37-b024-4571-b104-13658bb57cad">
       <input type="hidden" name="subject" value="New Contact Form Submission — Dr. Moamen Bakr Website">
       <input type="hidden" name="from_name" value="Dr. Moamen Bakr Website">
-      <label><span>Full name</span><input type="text" name="name" placeholder="Full name" required></label>
-      <label><span>Mobile number</span><input type="tel" name="phone" placeholder="Mobile number" required></label>
-      <label><span>Subject</span><input type="text" name="custom_subject" placeholder="Subject" required></label>
-      <label class="full"><span>Message</span><textarea name="message" placeholder="Message" rows="3" required></textarea></label>
+      <label><span>Full name</span><input type="text" name="name" data-i18n-ph="form.namePh" placeholder="Full name" required></label>
+      <label><span>Mobile number</span><input type="tel" name="phone" data-i18n-ph="form.phonePh" placeholder="Mobile number" required></label>
+      <label><span>Subject</span><input type="text" name="custom_subject" data-i18n-ph="form.subjectPh" placeholder="Subject" required></label>
+      <label class="full"><span>Message</span><textarea name="message" data-i18n-ph="form.messagePh" placeholder="Message" rows="3" required></textarea></label>
       <button type="submit" class="pill pill-gold send-btn" id="contactSendBtn">
-        Send Message
+        <span data-i18n="form.send">Send Message</span>
         <span class="send-ic"><i data-lucide="arrow-up-right"></i></span>
       </button>
     </form>
   </div>
 
   <div class="copyright">
-    © Dr. Moamen Bakr. All rights reserved.<br>
-    <a href="#">Privacy Policy</a> | <a href="#">Terms &amp; Conditions</a>
+    <span data-i18n="footer.copy">© Dr. Moamen Bakr. All rights reserved.</span><br>
+    <a href="#" data-i18n="footer.privacy">Privacy Policy</a> | <a href="#" data-i18n="footer.terms">Terms &amp; Conditions</a>
   </div>
 </footer>
 
@@ -1197,14 +1316,14 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
         <path d="M33.2 28.56c-.52-.26-3.04-1.5-3.52-1.68-.48-.16-.82-.26-1.16.26-.34.52-1.34 1.68-1.64 2.02-.3.34-.6.38-1.12.14-.52-.26-2.18-.8-4.16-2.56-1.54-1.36-2.58-3.06-2.88-3.58-.3-.52-.02-.8.22-1.06.22-.24.52-.6.78-.9.26-.3.34-.52.52-.86.16-.34.08-.64-.04-.9-.14-.26-1.16-2.82-1.6-3.86-.42-1.02-.86-0.88-1.16-.9h-1c-.34 0-.9.14-1.36.64-.48.52-1.8 1.76-1.8 4.28s1.84 4.96 2.1 5.3c.26.34 3.6 5.52 8.74 7.74 1.22.52 2.18.84 2.92 1.08 1.22.38 2.34.32 3.22.2.98-.14 3.04-1.24 3.46-2.44.44-1.2.44-2.22.3-2.44-.12-.22-.46-.34-.98-.6z" fill="#25D366"/>
       </svg>
     </div>
-    <h3>Book Your Consultation</h3>
+    <h3 data-i18n="wa.title">Book Your Consultation</h3>
     <ul class="wa-features">
-      <li>Instant response from our team</li>
-      <li>Secure &amp; private communication</li>
-      <li>Easy appointment scheduling</li>
+      <li data-i18n="wa.feat1">Instant response from our team</li>
+      <li data-i18n="wa.feat2">Secure &amp; private communication</li>
+      <li data-i18n="wa.feat3">Easy appointment scheduling</li>
     </ul>
-    <button class="wa-start" id="waStartBtn">Start WhatsApp Chat</button>
-    <p class="wa-note" id="waNote">You will be redirected to WhatsApp to continue your booking.</p>
+    <button class="wa-start" id="waStartBtn" data-i18n="wa.start">Start WhatsApp Chat</button>
+    <p class="wa-note" id="waNote" data-i18n="wa.note">You will be redirected to WhatsApp to continue your booking.</p>
   </div>
 </div>
 
@@ -1220,9 +1339,9 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
     </div>
     <div class="svc-modal-body">
       <p class="svc-modal-desc" id="svcModalDesc"></p>
-      <p class="svc-modal-hl-title">Highlights:</p>
+      <p class="svc-modal-hl-title" data-i18n="svcModal.hlTitle">Highlights:</p>
       <ul class="svc-modal-hl" id="svcModalHl"></ul>
-      <a class="pill pill-gold svc-modal-cta" href="#" onclick="closeSvcModal(); openWaModal(event);">Book Consultation</a>
+      <a class="pill pill-gold svc-modal-cta" href="#" onclick="closeSvcModal(); openWaModal(event);" data-i18n="svcModal.cta">Book Consultation</a>
     </div>
   </div>
 </div>
@@ -1235,15 +1354,24 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 
   // Testimonial carousel
   (() => {
-    const items = [
+    const itemsEn = [
       { body: "Professional, honest, and the results exceeded my expectations. I felt confident and well taken care of throughout the entire journey.", name: "Sara A." },
       { body: "From the first consultation to recovery, Dr. Bakr's team made me feel at ease. The outcome looks completely natural — exactly what I hoped for.", name: "Noura K." },
       { body: "His attention to detail is remarkable. Honest advice, realistic expectations, and results that genuinely improved my confidence.", name: "Maha R." },
       { body: "A rare combination of precision and compassion. I'd recommend Dr. Bakr to anyone considering aesthetic surgery.", name: "Layla H." },
     ];
+    const itemsAr = [
+      { body: "احترافية وصدق، والنتائج فاقت توقعاتي. شعرت بالثقة والاهتمام طوال الرحلة.", name: "سارة أ." },
+      { body: "من الاستشارة الأولى حتى التعافي، فريق د. بكر جعلني أشعر بالراحة. النتيجة تبدو طبيعية تمامًا — بالضبط ما كنت أتمناه.", name: "نورة ك." },
+      { body: "اهتمامه بالتفاصيل مذهل. نصائح صادقة، توقعات واقعية، ونتائج حسّنت ثقتي بنفسي فعلًا.", name: "مها ر." },
+      { body: "مزيج نادر من الدقة والرحمة. أنصح بالدكتور بكر لأي شخص يفكر في الجراحة التجميلية.", name: "ليلى ح." },
+    ];
+    const lang = (localStorage.getItem('site-lang') || 'en');
+    const items = lang === 'ar' ? itemsAr : itemsEn;
     const dots = document.querySelectorAll('.testimonials .dot');
     const body = document.getElementById('testiBody');
     let i = 0;
+    body.textContent = items[0].body;
     function go(n) {
       i = (n + items.length) % items.length;
       body.textContent = items[i].body;
@@ -1337,15 +1465,6 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
     if (e.key === 'Escape' && waOverlay.classList.contains('open')) closeWaModal();
   });
 
-  waStartBtn.addEventListener('click', function() {
-    const msg = encodeURIComponent('Hello, I would like to book a consultation with Dr. Moamen Bakr.');
-    if (isMobile) {
-      window.open('https://wa.me/' + waPhone.replace('+', '') + '?text=' + msg, '_blank');
-    } else {
-      window.open('https://web.whatsapp.com/send?phone=' + waPhone.replace('+', '') + '&text=' + msg, '_blank');
-    }
-  });
-
   // Contact form submission via Web3Forms
   const contactForm = document.getElementById('contactForm');
   const contactSendBtn = document.getElementById('contactSendBtn');
@@ -1389,6 +1508,175 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
         if (window.lucide) lucide.createIcons();
       }, 3000);
     });
+  });
+
+  // =================== i18n SYSTEM ===================
+  const translations = {
+    ar: {
+      'nav.about': 'عن الدكتور',
+      'nav.services': 'الخدمات',
+      'nav.results': 'النتائج',
+      'nav.why': 'لماذا نحن',
+      'nav.contactLink': 'تواصل',
+      'nav.contact': 'تواصل معنا',
+      'hero.title': 'إعادة تعريف الثقة<br>بالدقة والخبرة',
+      'hero.sub': 'بقيادة <strong>د. مؤمن بكر</strong>، استشاري جراحة التجميل بخبرة تزيد عن 14 عامًا، يقدم نتائج طبيعية ومتقنة وآمنة.',
+      'hero.cta': 'احجز استشارة',
+      'hero.strip1': '+14 سنة خبرة',
+      'hero.strip2': 'استشاري جراحة',
+      'hero.strip3': 'خبرة دولية',
+      'about.title': 'عن د. مؤمن بكر',
+      'about.lede': '<strong>د. مؤمن بكر</strong> استشاري جراحة التجميل بخبرة تزيد عن 14 عامًا، معروف بتقديم نتائج طبيعية ومتقنة. يجمع بين الدقة الجراحية المتقدمة والنهج المرتكز على المريض، ومتخصص في الإجراءات التجميلية والترميمية.',
+      'about.tag': 'الدقة. السلامة. نتائج طبيعية.',
+      'services.title': 'خدماتنا',
+      'results.title': 'قبل وبعد<br>/ النتائج',
+      'results.desc': 'كل نتيجة تعكس نهجًا مخصصًا، يجمع بين الخبرة الطبية والعين الفنية لتحقيق نتائج طبيعية ومتناسقة.',
+      'results.viewCase': 'عرض الحالة',
+      'why.title': 'لماذا تختارنا',
+      'why.card1': 'خبرة واسعة<br>وكفاءة مثبتة',
+      'why.card2': 'نهج علاجي<br>مخصص',
+      'why.card3': 'تقنيات متقدمة<br>وتكنولوجيا حديثة',
+      'why.card4': 'التزام بالسلامة<br>ونتائج طبيعية',
+      'testi.title': 'ماذا يقول مرضانا',
+      'cta.title': 'ابدأ رحلة التحول<br>اليوم .',
+      'cta.sub': 'احجز استشارتك واتخذ الخطوة الأولى',
+      'cta.btn': 'احجز استشارة',
+      'contact.title': 'تواصل معنا',
+      'contact.sub': 'فريقنا مستعد لمساعدتك والإجابة على جميع استفساراتك.',
+      'contact.callLabel': 'مركز الاتصال',
+      'contact.locationLabel': 'موقعنا',
+      'contact.locationVal': 'الرياض، المملكة العربية السعودية',
+      'contact.emailLabel': 'البريد الإلكتروني',
+      'contact.socialLabel': 'التواصل الاجتماعي',
+      'form.namePh': 'الاسم الكامل',
+      'form.phonePh': 'رقم الجوال',
+      'form.subjectPh': 'الموضوع',
+      'form.messagePh': 'الرسالة',
+      'form.send': 'إرسال الرسالة',
+      'footer.copy': '© د. مؤمن بكر. جميع الحقوق محفوظة.',
+      'footer.privacy': 'سياسة الخصوصية',
+      'footer.terms': 'الشروط والأحكام',
+      'wa.title': 'احجز استشارتك',
+      'wa.feat1': 'استجابة فورية من فريقنا',
+      'wa.feat2': 'تواصل آمن وخاص',
+      'wa.feat3': 'جدولة مواعيد سهلة',
+      'wa.start': 'ابدأ محادثة واتساب',
+      'wa.note': 'سيتم تحويلك إلى واتساب لإتمام حجزك.',
+      'wa.noteDesktop': 'تواصل معنا على واتساب على الرقم ',
+      'svcModal.hlTitle': 'أبرز المميزات:',
+      'svcModal.cta': 'احجز استشارة',
+      'svc.facelift': 'شد الوجه<br>والرقبة',
+      'svc.mommy': 'تجميل ما بعد<br>الولادة',
+      'svc.lipo': 'شفط الدهون<br>ونحت الجسم',
+      'svc.breast': 'تكبير<br>وشد الثدي',
+      'svc.postwl': 'جراحة ما بعد<br>فقدان الوزن',
+      'svc.rhino': 'تجميل الأنف',
+    }
+  };
+
+  function getCurrentLang() {
+    return localStorage.getItem('site-lang') || 'en';
+  }
+
+  function applyLanguage(lang) {
+    const html = document.documentElement;
+    if (lang === 'ar') {
+      html.setAttribute('lang', 'ar');
+      html.setAttribute('dir', 'rtl');
+      document.title = 'د. مؤمن بكر — استشاري جراحة التجميل، الرياض';
+    } else {
+      html.setAttribute('lang', 'en');
+      html.setAttribute('dir', 'ltr');
+      document.title = 'Dr. Moamen Bakr — Consultant Plastic Surgeon, Riyadh';
+    }
+
+    // Toggle active state on lang buttons
+    document.querySelectorAll('#langToggle button').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    if (lang === 'ar' && translations.ar) {
+      // Apply text translations
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        if (translations.ar[key]) {
+          el.innerHTML = translations.ar[key];
+        }
+      });
+      // Apply placeholder translations
+      document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-ph');
+        if (translations.ar[key]) {
+          el.setAttribute('placeholder', translations.ar[key]);
+        }
+      });
+      // WhatsApp note
+      if (!isMobile) {
+        waNote.textContent = translations.ar['wa.noteDesktop'] + waPhone;
+      }
+    }
+  }
+
+  // Apply language on page load
+  var currentLang = getCurrentLang();
+  if (currentLang === 'ar') {
+    applyLanguage('ar');
+  }
+
+  // Language toggle click handler
+  document.getElementById('langToggle').addEventListener('click', function(e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    var newLang = btn.dataset.lang;
+    if (newLang === getCurrentLang()) return;
+    localStorage.setItem('site-lang', newLang);
+    location.reload();
+  });
+
+  // Override service modal open for Arabic
+  var _origOpenSvcModal = openSvcModal;
+  openSvcModal = function(e) {
+    e.preventDefault();
+    var card = e.currentTarget;
+    var lang = getCurrentLang();
+    if (lang === 'ar' && card.dataset.svcTitleAr) {
+      svcModalImg.src = card.dataset.svcImg;
+      svcModalImg.alt = card.dataset.svcTitleAr;
+      svcModalTitle.textContent = card.dataset.svcTitleAr;
+      svcModalDesc.textContent = card.dataset.svcDescAr;
+      svcModalHl.innerHTML = card.dataset.svcHlAr
+        .split('|')
+        .map(function(h) { return '<li>' + h + '</li>'; })
+        .join('');
+    } else {
+      svcModalImg.src = card.dataset.svcImg;
+      svcModalImg.alt = card.dataset.svcTitle;
+      svcModalTitle.textContent = card.dataset.svcTitle;
+      svcModalDesc.textContent = card.dataset.svcDesc;
+      svcModalHl.innerHTML = card.dataset.svcHl
+        .split('|')
+        .map(function(h) { return '<li>' + h + '</li>'; })
+        .join('');
+    }
+    svcOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (window.lucide) lucide.createIcons();
+  };
+
+  // Override WhatsApp message for Arabic
+  waStartBtn.addEventListener('click', function() {
+    var lang = getCurrentLang();
+    var msg;
+    if (lang === 'ar') {
+      msg = encodeURIComponent('مرحبًا، أود حجز استشارة مع د. مؤمن بكر.');
+    } else {
+      msg = encodeURIComponent('Hello, I would like to book a consultation with Dr. Moamen Bakr.');
+    }
+    if (isMobile) {
+      window.open('https://wa.me/' + waPhone.replace('+', '') + '?text=' + msg, '_blank');
+    } else {
+      window.open('https://web.whatsapp.com/send?phone=' + waPhone.replace('+', '') + '&text=' + msg, '_blank');
+    }
   });
 </script>
 </body>
