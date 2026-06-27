@@ -387,6 +387,73 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
   .about-copy { padding: 48px 24px; }
 }
 
+/* ---------- CREDENTIALS ---------- */
+.credentials {
+  padding: 120px 40px 100px;
+  background: linear-gradient(to bottom, var(--bg-cream) 60%, #e8e6e1);
+  text-align: center;
+}
+.credentials-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-style: italic;
+  color: #6b7c6e;
+  margin-top: 20px;
+  margin-bottom: 64px;
+}
+.credentials-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1.5px solid #c8bc9e;
+  border-radius: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+}
+.credentials-card {
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.credentials-card + .credentials-card {
+  border-left: 1px solid #d9d0bb;
+}
+.credentials-card-value {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: var(--text-ink);
+}
+.credentials-card-label {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #6b7c6e;
+}
+.credentials-affiliations {
+  display: flex;
+  justify-content: center;
+  gap: 170px;
+  margin-top: 56px;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #b0bdb4;
+}
+@media (max-width: 900px) {
+  .credentials { padding: 64px 20px; }
+  .credentials-cards { grid-template-columns: repeat(2, 1fr); border-radius: 24px; }
+  .credentials-card + .credentials-card { border-left: none; }
+  .credentials-card:nth-child(2),
+  .credentials-card:nth-child(4) { border-left: 1px solid #d9d0bb; }
+  .credentials-card:nth-child(3),
+  .credentials-card:nth-child(4) { border-top: 1px solid #d9d0bb; }
+  .credentials-affiliations { flex-wrap: wrap; gap: 24px 40px; }
+}
+
 /* ---------- SERVICES ---------- */
 .services {
   padding: 100px 20px;
@@ -1225,6 +1292,38 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       aesthetic and reconstructive procedures in Saudi Arabia.
     </p>
     <p class="about-tag" data-reveal="right" data-i18n="about.tag">PRECISION. SAFETY. NATURAL RESULTS.</p>
+  </div>
+</section>
+
+<!-- ========================= CREDENTIALS ========================= -->
+<section class="credentials" id="credentials">
+  <h2 class="section-title-serif center" data-reveal="up">Academic Excellence &amp; Professional Expertise</h2>
+  <p class="credentials-subtitle" data-reveal="up">Combining advanced surgical training, academic leadership, and years of clinical experience.</p>
+
+  <div class="credentials-cards" data-reveal="up">
+    <div class="credentials-card">
+      <span class="credentials-card-value">14+</span>
+      <span class="credentials-card-label">Years Experience</span>
+    </div>
+    <div class="credentials-card">
+      <span class="credentials-card-value">PhD</span>
+      <span class="credentials-card-label">Plastic Surgery</span>
+    </div>
+    <div class="credentials-card">
+      <span class="credentials-card-value">Consultant</span>
+      <span class="credentials-card-label">Plastic Surgeon</span>
+    </div>
+    <div class="credentials-card">
+      <span class="credentials-card-value">Associate Professor</span>
+      <span class="credentials-card-label">Faculty of Medicine</span>
+    </div>
+  </div>
+
+  <div class="credentials-affiliations" data-reveal="up">
+    <span>ESPRS</span>
+    <span>Volunteer Surgeon</span>
+    <span>Operation Smile</span>
+    <span>ESSHM</span>
   </div>
 </section>
 
