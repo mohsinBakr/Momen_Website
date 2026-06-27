@@ -167,8 +167,8 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 }
 .nav-links {
   display: flex;
-  gap: 32px;
-  font-size: 1.4rem;
+  gap: 55px;
+  font-size: 1.7rem;
   color: var(--text-white-soft);
 }
 .nav-links a { transition: color .2s var(--ease); }
@@ -1352,31 +1352,31 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
 
 <!-- ========================= CREDENTIALS ========================= -->
 <section class="credentials" id="credentials">
-  <h2 class="section-title-serif center" data-reveal="up">Academic Excellence &amp; Professional Expertise</h2>
-  <p class="credentials-subtitle" data-reveal="up">Combining advanced surgical training, academic leadership, and years of clinical experience.</p>
+  <h2 class="section-title-serif center" data-reveal="up" data-i18n="cred.title">Academic Excellence &amp; Professional Expertise</h2>
+  <p class="credentials-subtitle" data-reveal="up" data-i18n="cred.subtitle">Combining advanced surgical training, academic leadership, and years of clinical experience.</p>
 
   <div class="credentials-cards" data-reveal="up">
     <div class="credentials-card">
-      <span class="credentials-card-value">14+</span>
-      <span class="credentials-card-label">Years Experience</span>
+      <span class="credentials-card-value" data-i18n="cred.val1">14+</span>
+      <span class="credentials-card-label" data-i18n="cred.lbl1">Years Experience</span>
     </div>
     <div class="credentials-card">
-      <span class="credentials-card-value">PhD</span>
-      <span class="credentials-card-label">Plastic Surgery</span>
+      <span class="credentials-card-value" data-i18n="cred.val2">PhD</span>
+      <span class="credentials-card-label" data-i18n="cred.lbl2">Plastic Surgery</span>
     </div>
     <div class="credentials-card">
-      <span class="credentials-card-value">Consultant</span>
-      <span class="credentials-card-label">Plastic Surgeon</span>
+      <span class="credentials-card-value" data-i18n="cred.val3">Consultant</span>
+      <span class="credentials-card-label" data-i18n="cred.lbl3">Plastic Surgeon</span>
     </div>
     <div class="credentials-card">
-      <span class="credentials-card-value">Associate Professor</span>
-      <span class="credentials-card-label">Faculty of Medicine</span>
+      <span class="credentials-card-value" data-i18n="cred.val4">Associate Professor</span>
+      <span class="credentials-card-label" data-i18n="cred.lbl4">Faculty of Medicine</span>
     </div>
   </div>
 
   <div class="credentials-affiliations" data-reveal="up">
     <span>ESPRS</span>
-    <span>Volunteer Surgeon</span>
+    <span data-i18n="cred.aff2">Volunteer Surgeon</span>
     <span>Operation Smile</span>
     <span>ESSHM</span>
   </div>
@@ -1939,6 +1939,17 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       'svc.rhino': 'تجميل الأنف',
       'svc.rhino.desc': 'تحسين تناغم الوجه من خلال تنقيح دقيق.',
       'svc.explore': 'استكشف العلاج',
+      'cred.title': 'التميز الأكاديمي والخبرة المهنية',
+      'cred.subtitle': 'يجمع بين التدريب الجراحي المتقدم والقيادة الأكاديمية وسنوات من الخبرة السريرية.',
+      'cred.val1': '+14',
+      'cred.lbl1': 'سنوات خبرة',
+      'cred.val2': 'دكتوراه',
+      'cred.lbl2': 'جراحة تجميلية',
+      'cred.val3': 'استشاري',
+      'cred.lbl3': 'جراح تجميل',
+      'cred.val4': 'أستاذ مساعد',
+      'cred.lbl4': 'كلية الطب',
+      'cred.aff2': 'جراح متطوع',
     }
   };
 
