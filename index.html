@@ -244,6 +244,11 @@ html[dir="rtl"] .svc-modal-title {
   right: auto; left: 24px;
   text-align: left;
 }
+html[dir="rtl"] .svc-card-number {
+  left: auto;
+  right: 80%;
+  transform: translate(50%, -50%);
+}
 html[dir="rtl"] .wa-features {
   text-align: right;
 }
@@ -456,89 +461,139 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
 
 /* ---------- SERVICES ---------- */
 .services {
-  padding: 100px 20px;
-  background: linear-gradient(to right, #f7f5f2, #Efeae4);
+  padding: 100px 40px 80px;
+  background: linear-gradient(to bottom, #f7f5f2, #efeae4);
 }
 .services .section-title-serif { margin-bottom: 56px; }
 
 .svc-grid {
-  max-width: 1180px;
+  max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 260px 220px 240px;
-  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
-/* Bento layout — placements */
-.svc-grid .svc-tall   { grid-column: 1; grid-row: 1; }
-.svc-grid .svc-mommy  { grid-column: 2; grid-row: 1 / span 2; }
-.svc-grid .svc-lipo   { grid-column: 1; grid-row: 2; }
-.svc-grid .svc-breast { grid-column: 2; grid-row: 2; }
-.svc-grid .svc-postwl { grid-column: 1; grid-row: 3; }
-.svc-grid .svc-rhino  { grid-column: 2; grid-row: 3; }
-/* Correct overlap: rebuild for 3-column feel like the ref */
-.svc-grid {
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 286px 264px 242px;
-}
-.svc-grid .svc-tall   { grid-column: 1 / span 4; grid-row: 1; }
-.svc-grid .svc-mommy  { grid-column: 5 / span 2; grid-row: 1 / span 2; }
-.svc-grid .svc-lipo   { grid-column: 1 / span 2; grid-row: 2; }
-.svc-grid .svc-breast { grid-column: 3 / span 2; grid-row: 2; }
-.svc-grid .svc-postwl { grid-column: 1 / span 3; grid-row: 3; }
-.svc-grid .svc-rhino  { grid-column: 4 / span 3; grid-row: 3; }
-
-.svc {
+.svc-card {
   position: relative;
-  border-radius: var(--radius-card);
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px 32px 36px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  background-image: var(--img);
-  background-size: cover;
-  background-position: center;
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.svc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+}
+.svc-card-number {
+  position: absolute;
+  top: 60%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-serif);
+  font-size: 18rem;
+  font-weight: 300;
+  background: linear-gradient(to bottom, #C6a77d, #E8e1d9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.09;
+  pointer-events: none;
+  line-height: 1;
+}
+.svc-card-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #eae8e3;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  box-shadow: var(--shadow-card);
+  justify-content: center;
+  align-self: flex-end;
+  margin-bottom: 64px;
 }
-.svc-label {
-  position: absolute;
-  right: 28px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: 'Optima', 'Segoe UI', 'Candara', sans-serif;
-  font-weight: 400;
-  font-size: 4rem;
-  color: #303c36;
+.svc-card-icon img {
+  width: 80px;
+  height: 80px;
+}
+.svc-card-title {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-style: italic;
+  font-weight: 600;
+  color: #2b4a42;
   line-height: 1.2;
-  pointer-events: none;
+  margin-bottom: 12px;
 }
-
+.svc-card-desc {
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--text-ink-soft);
+  line-height: 1.5;
+  margin-bottom: auto;
+}
+.svc-card-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 28px;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  z-index: 2;
+}
+.svc-card-link span {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #2b4a42;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.svc-card-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c6a77d, #dfc49d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.svc-card-arrow svg {
+  width: 16px;
+  height: 16px;
+  stroke: #fff;
+  stroke-width: 2.5;
+  fill: none;
+}
+/* Bottom row: 2 cards centered */
+.svc-grid .svc-card:nth-child(4),
+.svc-grid .svc-card:nth-child(5) {
+  grid-column: span 1;
+}
+.svc-grid::after {
+  content: '';
+  grid-column: 1;
+  display: none;
+}
+@media (min-width: 901px) {
+  .svc-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .svc-grid .svc-card:nth-child(1) { grid-column: 1 / span 2; }
+  .svc-grid .svc-card:nth-child(2) { grid-column: 3 / span 2; }
+  .svc-grid .svc-card:nth-child(3) { grid-column: 5 / span 2; }
+  .svc-grid .svc-card:nth-child(4) { grid-column: 2 / span 2; }
+  .svc-grid .svc-card:nth-child(5) { grid-column: 4 / span 2; }
+}
 @media (max-width: 900px) {
-  .svc-grid { grid-template-columns: 1fr; grid-template-rows: repeat(6, 200px); }
-  .svc-grid > * { grid-column: 1 !important; grid-row: auto !important; }
-  .svc-grid .svc-tall { background-position: right center !important; background-size: 225% !important; }
-  .svc-grid .svc-mommy { background-position: center 70% !important; }
-  .svc-grid .svc-postwl { background-position:  10% 100% !important; background-size: 170% !important; }
-  .svc-grid .svc-rhino { background-position: center 100% !important; background-size: 170% !important; }
-  .svc-label {
-    right: 50% !important;
-    left: auto !important;
-    transform: translate(50%, -50%) !important;
-    text-align: center !important;
-  }
-  .svc-tall .svc-label {
-    top: 68% !important;
-  }
-  .svc-mommy .svc-label {
-    top: 68% !important;
-  }
-  .svc-rhino .svc-label {
-    top: 57% !important;
-  }
-  .svc-postwl .svc-label {
-    top: 57% !important;
-  }
+  .services { padding: 64px 20px; }
+  .svc-grid { grid-template-columns: 1fr; }
 }
 
 /* ---------- BEFORE / AFTER ---------- */
@@ -1332,29 +1387,114 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
 <h2 class="section-title-serif center" data-reveal="up" data-i18n="services.title">Plastic Surgery Services in Riyadh</h2>
 
   <div class="svc-grid" data-reveal-stagger>
-    <!-- Row 1 -->
-    <a class="svc svc-tall" href="en/facelift-riyadh.html" data-svc-page-ar="ar/شد-الوجه-الرياض.html" data-reveal="scale" style="--img:url('assets/service-facelift.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-facelift_OLD.png" data-svc-title="Facelift &amp; Neck Lift" data-svc-desc="Restore a youthful, refreshed appearance by tightening and redefining facial contours with natural-looking results." data-svc-hl="Natural lifting results|Defined jawline|Long-lasting outcome" data-svc-title-ar="شد الوجه والرقبة" data-svc-desc-ar="استعادة مظهر شبابي ومنتعش من خلال شد وإعادة تحديد ملامح الوجه بنتائج طبيعية." data-svc-hl-ar="نتائج شد طبيعية|فك محدد|نتائج طويلة الأمد">
-      <span class="svc-label" style="top:62%" data-i18n="svc.facelift">Facelift &amp;<br>Neck Lift</span>
-    </a>
-    <a class="svc svc-mommy" href="en/mommy-makeover-riyadh.html" data-svc-page-ar="ar/تجميل-بعد-الولادة-الرياض.html" data-reveal="scale" style="--img:url('assets/service-mommy-makeover.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-mommy-makeover_OLD.png" data-svc-title="Mommy Makeover" data-svc-desc="A customized combination of procedures designed to restore your body after pregnancy with safe, refined results." data-svc-hl="Personalized treatment plan|Full body restoration|Natural results" data-svc-title-ar="تجميل  بعد الولادة" data-svc-desc-ar="مجموعة مخصصة من الإجراءات المصممة لاستعادة جسمك بعد الحمل بنتائج آمنة ومتقنة." data-svc-hl-ar="خطة علاج مخصصة|استعادة شاملة للجسم|نتائج طبيعية">
-      <span class="svc-label" style="top:53%; transform:translate(-50%,50%); text-align:center" data-i18n="svc.mommy">Mommy<br>Makeover</span>
-    </a>
+    <!-- 1 — Facelift -->
+    <div class="svc-card" data-reveal="up"
+      data-svc-img="assets/service-facelift.png"
+      data-svc-title="Facelift &amp; Neck Lift"
+      data-svc-title-ar="شد الوجه والرقبة"
+      data-svc-desc="Restore youthful contours with advanced facelift and neck lift techniques that deliver natural, long-lasting rejuvenation."
+      data-svc-desc-ar="استعد ملامح الشباب مع تقنيات شد الوجه والرقبة المتقدمة التي تمنحك نتائج طبيعية ودائمة."
+      data-svc-hl="Natural-looking rejuvenation|Minimal scarring techniques|Long-lasting results"
+      data-svc-hl-ar="تجديد بمظهر طبيعي|تقنيات بأقل ندبات|نتائج طويلة الأمد"
+      data-svc-page="en/facelift-riyadh.html"
+      data-svc-page-ar="ar/شد-الوجه-الرياض.html">
+      <span class="svc-card-number">1</span>
+      <div class="svc-card-icon"><img src="assets/svc-facelift.svg" alt="Facelift icon"></div>
+      <h3 class="svc-card-title" data-i18n="svc.facelift">Facelift<br>&amp; Neck Lift</h3>
+      <p class="svc-card-desc" data-i18n="svc.facelift.desc">Restore youthful contours with natural-looking rejuvenation.</p>
+      <a class="svc-card-link" href="en/facelift-riyadh.html" data-svc-page-ar="ar/شد-الوجه-الرياض.html">
+        <span data-i18n="svc.explore">Explore Treatment</span>
+        <span class="svc-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+      </a>
+    </div>
 
-    <!-- Row 2 -->
-    <a class="svc svc-lipo" href="en/liposuction-riyadh.html" data-svc-page-ar="ar/شفط-الدهون-الرياض.html" data-svc-blog="en/blog/liposuction-cost-riyadh.html" data-svc-blog-ar="ar/blog/تكلفة-شفط-الدهون-في-الرياض.html" data-reveal="scale" style="--img:url('assets/service-body-contouring.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-body-contouring_OLD.png" data-svc-title="Liposuction &amp; Body Contouring" data-svc-desc="Sculpt and refine your body shape by removing stubborn fat and enhancing natural proportions." data-svc-hl="Targeted fat removal|Smooth body contours|Minimal downtime" data-svc-title-ar="شفط الدهون ونحت الجسم" data-svc-desc-ar="نحت وتحسين شكل الجسم عن طريق إزالة الدهون العنيدة وتعزيز التناسق الطبيعي." data-svc-hl-ar="إزالة دهون مستهدفة|ملامح جسم ناعمة|فترة تعافي قصيرة">
-      <span class="svc-label" style="top:57%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.lipo">Liposuction &amp; Body Contouring</span>
-    </a>
-    <a class="svc svc-breast" href="en/breast-augmentation-riyadh.html" data-svc-page-ar="ar/تكبير-الثدي-الرياض.html" data-reveal="scale" style="--img:url('assets/service-breast.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-breast_OLD.png" data-svc-title="Breast Augmentation &amp; Lift" data-svc-desc="Enhance shape, volume, and symmetry with advanced techniques tailored to your goals." data-svc-hl="Natural proportions|Improved symmetry|Long-lasting results" data-svc-title-ar="تكبير وشد الثدي" data-svc-desc-ar="تحسين الشكل والحجم والتناسق بتقنيات متقدمة مصممة وفقاً لأهدافك." data-svc-hl-ar="تناسق طبيعي|تحسين التماثل|نتائج طويلة الأمد">
-      <span class="svc-label" style="top:57%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.breast">Breast<br>Augmentation &amp; Lift</span>
-    </a>
+    <!-- 2 — Liposuction -->
+    <div class="svc-card" data-reveal="up"
+      data-svc-img="assets/service-body-contouring.png"
+      data-svc-title="Liposuction &amp; Body Contouring"
+      data-svc-title-ar="شفط الدهون ونحت الجسم"
+      data-svc-desc="Refine your body shape and enhance natural proportions with precision liposuction and contouring techniques."
+      data-svc-desc-ar="حسّن شكل جسمك وعزز تناسقه الطبيعي مع تقنيات شفط الدهون ونحت الجسم الدقيقة."
+      data-svc-hl="Targeted fat removal|Enhanced body proportions|Quick recovery"
+      data-svc-hl-ar="إزالة دهون موجّهة|تحسين تناسق الجسم|تعافٍ سريع"
+      data-svc-page="en/liposuction-riyadh.html"
+      data-svc-page-ar="ar/شفط-الدهون-الرياض.html"
+      data-svc-blog="en/blog/liposuction-cost-riyadh.html"
+      data-svc-blog-ar="ar/blog/تكلفة-شفط-الدهون-في-الرياض.html">
+      <span class="svc-card-number">2</span>
+      <div class="svc-card-icon"><img src="assets/svc-lipo.svg" alt="Liposuction icon"></div>
+      <h3 class="svc-card-title" data-i18n="svc.lipo">Liposuction<br>&amp; Body Contouring</h3>
+      <p class="svc-card-desc" data-i18n="svc.lipo.desc">Refine body shape and enhance natural proportions.</p>
+      <a class="svc-card-link" href="en/liposuction-riyadh.html" data-svc-page-ar="ar/شفط-الدهون-الرياض.html">
+        <span data-i18n="svc.explore">Explore Treatment</span>
+        <span class="svc-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+      </a>
+    </div>
 
-    <!-- Row 3 -->
-    <a class="svc svc-postwl" href="en/post-weight-loss-surgery-riyadh.html" data-svc-page-ar="ar/جراحة-بعد-فقدان-الوزن-الرياض.html" data-reveal="scale" style="--img:url('assets/service-weight-loss.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-weight-loss_OLD.png" data-svc-title="Post-Weight-Loss Surgery" data-svc-desc="Remove excess skin and reshape the body after significant weight loss for a smoother, firmer appearance." data-svc-hl="Skin tightening|Improved body shape|Confidence boost" data-svc-title-ar="جراحة ما بعد فقدان الوزن" data-svc-desc-ar="إزالة الجلد الزائد وإعادة تشكيل الجسم بعد فقدان الوزن الكبير للحصول على مظهر أكثر نعومة وشداً." data-svc-hl-ar="شد الجلد|تحسين شكل الجسم|تعزيز الثقة">
-      <span class="svc-label" style="top:73%; right:50%; transform:translate(50%,-50%); text-align:center; white-space:nowrap" data-i18n="svc.postwl">Post-Weight-Loss<br>Surgery</span>
-    </a>
-    <a class="svc svc-rhino" href="en/rhinoplasty-riyadh.html" data-svc-page-ar="ar/تجميل-الانف-الرياض.html" data-svc-blog="en/blog/best-rhinoplasty-surgeon-riyadh.html" data-svc-blog-ar="ar/blog/افضل-دكتور-تجميل-انف-في-الرياض.html" data-reveal="scale" style="--img:url('assets/service-rhinoplasty.png')" onclick="openSvcModal(event)" data-svc-img="assets/service-rhinoplasty_OLD.png" data-svc-title="Rhinoplasty" data-svc-desc="Refine the shape of the nose while maintaining facial harmony and natural balance." data-svc-hl="Facial harmony|Precise reshaping|Natural outcome" data-svc-title-ar="تجميل الأنف" data-svc-desc-ar="تحسين شكل الأنف مع الحفاظ على تناسق الوجه والتوازن الطبيعي." data-svc-hl-ar="تناسق الوجه|إعادة تشكيل دقيقة|نتيجة طبيعية">
-      <span class="svc-label" style="top:73%; right:50%; transform:translate(50%,-50%); text-align:center" data-i18n="svc.rhino">Rhinoplasty</span>
-    </a>
+    <!-- 3 — Mommy Makeover -->
+    <div class="svc-card" data-reveal="up"
+      data-svc-img="assets/service-mommy-makeover.png"
+      data-svc-title="Mommy Makeover"
+      data-svc-title-ar="تجميل ما بعد الولادة"
+      data-svc-desc="Personalized combination of procedures designed to restore your pre-pregnancy body and confidence."
+      data-svc-desc-ar="مجموعة إجراءات مخصصة لاستعادة جسمك وثقتك بعد الحمل والولادة."
+      data-svc-hl="Customized treatment plan|Multiple areas addressed|Restored confidence"
+      data-svc-hl-ar="خطة علاج مخصصة|معالجة مناطق متعددة|استعادة الثقة"
+      data-svc-page="en/mommy-makeover-riyadh.html"
+      data-svc-page-ar="ar/تجميل-بعد-الولادة-الرياض.html">
+      <span class="svc-card-number">3</span>
+      <div class="svc-card-icon"><img src="assets/svc-mommy.svg" alt="Mommy Makeover icon"></div>
+      <h3 class="svc-card-title" data-i18n="svc.mommy">Mommy<br>Makeover</h3>
+      <p class="svc-card-desc" data-i18n="svc.mommy.desc">Personalized procedures to restore confidence after pregnancy.</p>
+      <a class="svc-card-link" href="en/mommy-makeover-riyadh.html" data-svc-page-ar="ar/تجميل-بعد-الولادة-الرياض.html">
+        <span data-i18n="svc.explore">Explore Treatment</span>
+        <span class="svc-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+      </a>
+    </div>
+
+    <!-- 4 — Breast Surgery -->
+    <div class="svc-card" data-reveal="up"
+      data-svc-img="assets/service-breast.png"
+      data-svc-title="Breast Surgery"
+      data-svc-title-ar="جراحة الثدي"
+      data-svc-desc="Enhance shape, volume, and overall balance with tailored breast augmentation, lift, or reduction procedures."
+      data-svc-desc-ar="حسّني شكل وحجم وتناسق الثدي مع إجراءات التكبير أو الرفع أو التصغير المخصصة."
+      data-svc-hl="Natural shape enhancement|Proportional results|Personalized approach"
+      data-svc-hl-ar="تحسين طبيعي للشكل|نتائج متناسقة|منهج شخصي"
+      data-svc-page="en/breast-augmentation-riyadh.html"
+      data-svc-page-ar="ar/تكبير-الثدي-الرياض.html">
+      <span class="svc-card-number">4</span>
+      <div class="svc-card-icon"><img src="assets/svc-breast.svg" alt="Breast Surgery icon"></div>
+      <h3 class="svc-card-title" data-i18n="svc.breast">Breast Surgery</h3>
+      <p class="svc-card-desc" data-i18n="svc.breast.desc">Enhance shape, volume, and overall balance.</p>
+      <a class="svc-card-link" href="en/breast-augmentation-riyadh.html" data-svc-page-ar="ar/تكبير-الثدي-الرياض.html">
+        <span data-i18n="svc.explore">Explore Treatment</span>
+        <span class="svc-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+      </a>
+    </div>
+
+    <!-- 5 — Rhinoplasty -->
+    <div class="svc-card" data-reveal="up"
+      data-svc-img="assets/service-rhinoplasty.png"
+      data-svc-title="Rhinoplasty"
+      data-svc-title-ar="تجميل الأنف"
+      data-svc-desc="Improve facial harmony through precise nasal refinement using advanced preservation and ultrasonic techniques."
+      data-svc-desc-ar="حسّن تناغم ملامح وجهك من خلال تجميل الأنف بتقنيات الحفاظ والموجات فوق الصوتية المتقدمة."
+      data-svc-hl="Facial harmony improvement|Advanced techniques|Natural-looking results"
+      data-svc-hl-ar="تحسين تناغم الوجه|تقنيات متقدمة|نتائج بمظهر طبيعي"
+      data-svc-page="en/rhinoplasty-riyadh.html"
+      data-svc-page-ar="ar/تجميل-الانف-الرياض.html"
+      data-svc-blog="en/blog/best-rhinoplasty-surgeon-riyadh.html"
+      data-svc-blog-ar="ar/blog/افضل-دكتور-تجميل-انف-في-الرياض.html">
+      <span class="svc-card-number">5</span>
+      <div class="svc-card-icon"><img src="assets/svc-rhino.svg" alt="Rhinoplasty icon"></div>
+      <h3 class="svc-card-title" data-i18n="svc.rhino">Rhinoplasty</h3>
+      <p class="svc-card-desc" data-i18n="svc.rhino.desc">Improve facial harmony through precise refinement.</p>
+      <a class="svc-card-link" href="en/rhinoplasty-riyadh.html" data-svc-page-ar="ar/تجميل-الانف-الرياض.html">
+        <span data-i18n="svc.explore">Explore Treatment</span>
+        <span class="svc-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1596,9 +1736,7 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
   const svcModalDesc = document.getElementById('svcModalDesc');
   const svcModalHl = document.getElementById('svcModalHl');
 
-  function openSvcModal(e) {
-    e.preventDefault();
-    const card = e.currentTarget;
+  function openSvcModal(card) {
     const lang = getCurrentLang();
     svcModalImg.src = card.dataset.svcImg;
     svcModalImg.alt = card.dataset.svcTitle;
@@ -1611,7 +1749,7 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       .join('');
     // Service page link
     var pageLink = document.getElementById('svcModalPageLink');
-    pageLink.href = lang === 'ar' && card.dataset.svcPageAr ? card.dataset.svcPageAr : card.getAttribute('href');
+    pageLink.href = lang === 'ar' && card.dataset.svcPageAr ? card.dataset.svcPageAr : card.dataset.svcPage;
     // Blog link (show only if blog exists for this service)
     var blogLink = document.getElementById('svcModalBlogLink');
     var blogUrl = lang === 'ar' ? card.dataset.svcBlogAr : card.dataset.svcBlog;
@@ -1625,6 +1763,27 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
     document.body.style.overflow = 'hidden';
     if (window.lucide) lucide.createIcons();
   }
+
+  // Bind card clicks: "Explore Treatment" link navigates, rest opens modal
+  document.querySelectorAll('.svc-card').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      // If click is on the .svc-card-link or inside it, let the link navigate
+      if (e.target.closest('.svc-card-link')) return;
+      e.preventDefault();
+      openSvcModal(card);
+    });
+  });
+
+  // Update "Explore Treatment" links for Arabic
+  (function() {
+    var lang = getCurrentLang();
+    if (lang === 'ar') {
+      document.querySelectorAll('.svc-card-link[data-svc-page-ar]').forEach(function(link) {
+        link.href = link.dataset.svcPageAr;
+      });
+    }
+  })();
+
   function closeSvcModal() {
     svcOverlay.classList.remove('open');
     document.body.style.overflow = '';
@@ -1769,11 +1928,17 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       'svcModal.learnMore': 'اقرأ المزيد',
       'svcModal.readArticle': 'اقرأ المقال',
       'svc.facelift': 'شد الوجه<br>والرقبة',
+      'svc.facelift.desc': 'استعادة ملامح الشباب مع تجديد طبيعي المظهر.',
       'svc.mommy': 'تجميل بعد<br>الولادة',
+      'svc.mommy.desc': 'إجراءات مخصصة لاستعادة الثقة بعد الحمل.',
       'svc.lipo': 'شفط الدهون<br>ونحت الجسم',
+      'svc.lipo.desc': 'تحسين شكل الجسم وتعزيز التناسق الطبيعي.',
       'svc.breast': 'تكبير<br>وشد الثدي',
+      'svc.breast.desc': 'تحسين الشكل والحجم والتوازن العام.',
       'svc.postwl': 'جراحة ما بعد<br>فقدان الوزن',
       'svc.rhino': 'تجميل الأنف',
+      'svc.rhino.desc': 'تحسين تناغم الوجه من خلال تنقيح دقيق.',
+      'svc.explore': 'استكشف العلاج',
     }
   };
 
@@ -1824,10 +1989,6 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
   var currentLang = getCurrentLang();
   if (currentLang === 'ar') {
     applyLanguage('ar');
-    // Update service card hrefs for Arabic
-    document.querySelectorAll('.svc[data-svc-page-ar]').forEach(function(el) {
-      el.setAttribute('href', el.dataset.svcPageAr);
-    });
   }
 
   // Language toggle click handler
@@ -1839,48 +2000,6 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
     localStorage.setItem('site-lang', newLang);
     location.reload();
   });
-
-  // Override service modal open for Arabic
-  var _origOpenSvcModal = openSvcModal;
-  openSvcModal = function(e) {
-    e.preventDefault();
-    var card = e.currentTarget;
-    var lang = getCurrentLang();
-    if (lang === 'ar' && card.dataset.svcTitleAr) {
-      svcModalImg.src = card.dataset.svcImg;
-      svcModalImg.alt = card.dataset.svcTitleAr;
-      svcModalTitle.textContent = card.dataset.svcTitleAr;
-      svcModalDesc.textContent = card.dataset.svcDescAr;
-      svcModalHl.innerHTML = card.dataset.svcHlAr
-        .split('|')
-        .map(function(h) { return '<li>' + h + '</li>'; })
-        .join('');
-    } else {
-      svcModalImg.src = card.dataset.svcImg;
-      svcModalImg.alt = card.dataset.svcTitle;
-      svcModalTitle.textContent = card.dataset.svcTitle;
-      svcModalDesc.textContent = card.dataset.svcDesc;
-      svcModalHl.innerHTML = card.dataset.svcHl
-        .split('|')
-        .map(function(h) { return '<li>' + h + '</li>'; })
-        .join('');
-    }
-    // Service page link
-    var pageLink = document.getElementById('svcModalPageLink');
-    pageLink.href = lang === 'ar' && card.dataset.svcPageAr ? card.dataset.svcPageAr : card.getAttribute('href');
-    // Blog link (show only if blog exists for this service)
-    var blogLink = document.getElementById('svcModalBlogLink');
-    var blogUrl = lang === 'ar' ? card.dataset.svcBlogAr : card.dataset.svcBlog;
-    if (blogUrl) {
-      blogLink.href = blogUrl;
-      blogLink.style.display = '';
-    } else {
-      blogLink.style.display = 'none';
-    }
-    svcOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    if (window.lucide) lucide.createIcons();
-  };
 
   // Override WhatsApp message for Arabic
   waStartBtn.addEventListener('click', function() {
