@@ -159,6 +159,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
       <div class="editor-hint" id="editorHint">
         <strong>Editing mode:</strong> Click on any text in the page below to edit it. Changed text is highlighted in yellow.
         <button class="svc-manager-btn" id="svcManagerBtn">Manage Service Cards</button>
+        <button class="svc-manager-btn" id="casesManagerBtn">Manage Cases</button>
       </div>
       <div class="editor-placeholder" id="editorPlaceholder">
         <div>
@@ -290,6 +291,70 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
           </div>
         </div>
         <button class="svc-add-btn" id="svcAddBtn">Add Service Card</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cases Manager Modal -->
+<div class="svc-modal-overlay" id="casesManagerOverlay">
+  <div class="svc-manager">
+    <div class="svc-manager-header">
+      <h3>Manage Before &amp; After Cases</h3>
+      <button class="svc-manager-close" id="closeCasesManager">&times;</button>
+    </div>
+    <div class="svc-manager-body">
+      <div class="svc-list" id="casesList"></div>
+      <div class="svc-add-section">
+        <h4>+ Add New Case</h4>
+        <div class="svc-form-row full">
+          <div class="svc-form-group">
+            <label>Before &amp; After Photo</label>
+            <input type="file" id="caseNewImg" accept="image/*">
+            <span class="hint">Combined before/after image displayed in the slider</span>
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Procedure (English)</label>
+            <input type="text" id="caseNewProcedure" placeholder="e.g. Liposuction">
+          </div>
+          <div class="svc-form-group">
+            <label>Procedure (Arabic)</label>
+            <input type="text" id="caseNewProcedureAr" placeholder="e.g. شفط الدهون" dir="rtl">
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Concern (English)</label>
+            <input type="text" id="caseNewConcern" placeholder="e.g. Stubborn abdominal fat">
+          </div>
+          <div class="svc-form-group">
+            <label>Concern (Arabic)</label>
+            <input type="text" id="caseNewConcernAr" placeholder="e.g. دهون البطن العنيدة" dir="rtl">
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Approach (English)</label>
+            <input type="text" id="caseNewApproach" placeholder="e.g. Targeted liposuction with contour refinement">
+          </div>
+          <div class="svc-form-group">
+            <label>Approach (Arabic)</label>
+            <input type="text" id="caseNewApproachAr" placeholder="e.g. شفط دهون مستهدف مع تحسين محيط الجسم" dir="rtl">
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Result (English)</label>
+            <input type="text" id="caseNewResult" placeholder="e.g. Improved body shape with natural definition">
+          </div>
+          <div class="svc-form-group">
+            <label>Result (Arabic)</label>
+            <input type="text" id="caseNewResultAr" placeholder="e.g. تحسين شكل الجسم بتحديد طبيعي" dir="rtl">
+          </div>
+        </div>
+        <button class="svc-add-btn" id="caseAddBtn">Add Case</button>
       </div>
     </div>
   </div>
@@ -704,7 +769,10 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
   function showSvcButton() {
     const btn = document.getElementById('svcManagerBtn');
-    btn.style.display = isHomepage() ? 'inline-block' : 'none';
+    const casesBtn = document.getElementById('casesManagerBtn');
+    const show = isHomepage() ? 'inline-block' : 'none';
+    btn.style.display = show;
+    casesBtn.style.display = show;
   }
 
   function parseSvcCards() {
@@ -1023,6 +1091,263 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     } finally {
       btn.disabled = false;
       btn.textContent = 'Add Service Card';
+    }
+  });
+
+  // --- Cases Manager ---
+  let cases = [];
+
+  function parseCases() {
+    cases = [];
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(currentHTML, 'text/html');
+    const frames = doc.querySelectorAll('.results-compare .compare-frame');
+    frames.forEach((frame) => {
+      cases.push({
+        img: frame.getAttribute('data-case-img') || '',
+        procedure: frame.getAttribute('data-case-procedure') || '',
+        procedureAr: frame.getAttribute('data-case-procedure-ar') || '',
+        concern: frame.getAttribute('data-case-concern') || '',
+        concernAr: frame.getAttribute('data-case-concern-ar') || '',
+        approach: frame.getAttribute('data-case-approach') || '',
+        approachAr: frame.getAttribute('data-case-approach-ar') || '',
+        result: frame.getAttribute('data-case-result') || '',
+        resultAr: frame.getAttribute('data-case-result-ar') || '',
+      });
+    });
+  }
+
+  function renderCasesList() {
+    const list = document.getElementById('casesList');
+    if (cases.length === 0) {
+      list.innerHTML = '<p style="color:rgba(0,0,0,0.4);font-size:13px;">No cases found.</p>';
+      return;
+    }
+    list.innerHTML = cases.map((c, i) => `
+      <div class="svc-list-item">
+        <span class="svc-num">${i + 1}</span>
+        <div class="svc-info">
+          <strong>${c.procedure}</strong>
+          <small>${c.concern}</small>
+        </div>
+        <button class="svc-del" data-idx="${i}">Remove</button>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.svc-del').forEach(btn => {
+      btn.addEventListener('click', () => removeCase(parseInt(btn.dataset.idx)));
+    });
+  }
+
+  function removeCase(idx) {
+    if (!confirm('Remove this case?')) return;
+    cases.splice(idx, 1);
+    rebuildCasesHTML();
+    renderCasesList();
+    showToast('Case removed. Save to GitHub to apply.');
+  }
+
+  function buildCaseFrameHTML(c) {
+    return `      <div class="compare-frame"
+        data-case-img="${c.img}"
+        data-case-procedure="${c.procedure}"
+        data-case-procedure-ar="${c.procedureAr}"
+        data-case-concern="${c.concern}"
+        data-case-concern-ar="${c.concernAr}"
+        data-case-approach="${c.approach}"
+        data-case-approach-ar="${c.approachAr}"
+        data-case-result="${c.result}"
+        data-case-result-ar="${c.resultAr}">
+        <div class="compare-img ba-composite" style="background-image:url('${c.img}')"></div>
+        <a class="pill pill-glass view-case" href="#">
+          <span data-i18n="results.viewCase">View Case</span> <i data-lucide="arrow-right"></i>
+        </a>
+      </div>`;
+  }
+
+  function rebuildCasesHTML() {
+    // Build new results-compare content with slider
+    const framesHTML = cases.map(c => buildCaseFrameHTML(c)).join('\n');
+    const sliderControls = cases.length > 1 ? `
+      <button class="case-slider-btn case-slider-prev" aria-label="Previous case">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="case-slider-btn case-slider-next" aria-label="Next case">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>` : '';
+
+    const newCompare = `    <div class="results-compare" id="compare" data-reveal="right">
+${framesHTML}${sliderControls}
+    </div>`;
+
+    // Build dots
+    const dotsHTML = cases.map((_, i) => `<span class="dot${i === 0 ? ' active' : ''}"></span>`).join('');
+    const newDots = `  <div class="dots">\n    ${dotsHTML}\n  </div>`;
+
+    // Replace results-compare in currentHTML
+    const compareStart = currentHTML.indexOf('<div class="results-compare"');
+    if (compareStart === -1) return;
+    // Find closing </div> of results-compare
+    let depth = 0, pos = compareStart, compareEnd = -1;
+    while (pos < currentHTML.length) {
+      if (currentHTML.substring(pos, pos + 4) === '<div') { depth++; pos += 4; }
+      else if (currentHTML.substring(pos, pos + 6) === '</div>') {
+        depth--;
+        if (depth === 0) { compareEnd = pos + 6; break; }
+        pos += 6;
+      } else { pos++; }
+    }
+    if (compareEnd === -1) return;
+    currentHTML = currentHTML.substring(0, compareStart) + newCompare + currentHTML.substring(compareEnd);
+
+    // Replace dots section (the one right after </div> of results-inner closing)
+    const dotsStart = currentHTML.indexOf('<div class="dots">', compareStart);
+    if (dotsStart !== -1) {
+      const dotsEnd = currentHTML.indexOf('</div>', dotsStart) + 6;
+      currentHTML = currentHTML.substring(0, dotsStart) + newDots + currentHTML.substring(dotsEnd);
+    }
+
+    // Add slider CSS if not present
+    if (currentHTML.indexOf('.case-slider-btn') === -1) {
+      const sliderCSS = `
+/* Case Slider */
+.results-compare { position: relative; }
+.results-compare .compare-frame { display: none; }
+.results-compare .compare-frame.active { display: block; }
+.case-slider-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 40px; height: 40px; border-radius: 50%; background: rgba(30,57,50,0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: background .2s; }
+.case-slider-btn:hover { background: rgba(30,57,50,0.9); }
+.case-slider-prev { left: 12px; }
+.case-slider-next { right: 12px; }
+`;
+      // Insert before closing style tag
+      const styleEnd = currentHTML.lastIndexOf('</' + 'style>');
+      if (styleEnd !== -1) {
+        currentHTML = currentHTML.substring(0, styleEnd) + sliderCSS + currentHTML.substring(styleEnd);
+      }
+    }
+
+    // Add slider JS if not present
+    if (currentHTML.indexOf('// Case Slider Auto') === -1) {
+      const sliderJS = `
+  // Case Slider Auto
+  (function() {
+    var compare = document.getElementById('compare');
+    if (!compare) return;
+    var frames = compare.querySelectorAll('.compare-frame');
+    if (frames.length === 0) return;
+    var dots = compare.closest('.results') ? compare.closest('.results').querySelector('.dots') : null;
+    var allDots = dots ? dots.querySelectorAll('.dot') : [];
+    var current = 0;
+    var interval = null;
+
+    function showSlide(idx) {
+      frames.forEach(function(f, i) { f.classList.toggle('active', i === idx); });
+      allDots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+      current = idx;
+    }
+
+    function nextSlide() { showSlide((current + 1) % frames.length); }
+    function prevSlide() { showSlide((current - 1 + frames.length) % frames.length); }
+
+    function startAuto() { interval = setInterval(nextSlide, 5000); }
+    function resetAuto() { clearInterval(interval); startAuto(); }
+
+    showSlide(0);
+    if (frames.length > 1) {
+      startAuto();
+      var prevBtn = compare.querySelector('.case-slider-prev');
+      var nextBtn = compare.querySelector('.case-slider-next');
+      if (prevBtn) prevBtn.addEventListener('click', function() { prevSlide(); resetAuto(); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { nextSlide(); resetAuto(); });
+      allDots.forEach(function(dot, i) {
+        dot.addEventListener('click', function() { showSlide(i); resetAuto(); });
+      });
+    }
+  })();
+`;
+      // Insert before closing script tag
+      const scriptEnd = currentHTML.lastIndexOf('</' + 'script>');
+      if (scriptEnd !== -1) {
+        currentHTML = currentHTML.substring(0, scriptEnd) + sliderJS + currentHTML.substring(scriptEnd);
+      }
+    }
+
+    changeCount++;
+    updateBadge();
+  }
+
+  // Open cases manager
+  document.getElementById('casesManagerBtn').addEventListener('click', () => {
+    parseCases();
+    renderCasesList();
+    document.getElementById('casesManagerOverlay').classList.add('show');
+  });
+
+  document.getElementById('closeCasesManager').addEventListener('click', () => {
+    document.getElementById('casesManagerOverlay').classList.remove('show');
+  });
+
+  // Add case
+  document.getElementById('caseAddBtn').addEventListener('click', async () => {
+    const procedure = document.getElementById('caseNewProcedure').value.trim();
+    const procedureAr = document.getElementById('caseNewProcedureAr').value.trim();
+    const concern = document.getElementById('caseNewConcern').value.trim();
+    const concernAr = document.getElementById('caseNewConcernAr').value.trim();
+    const approach = document.getElementById('caseNewApproach').value.trim();
+    const approachAr = document.getElementById('caseNewApproachAr').value.trim();
+    const result = document.getElementById('caseNewResult').value.trim();
+    const resultAr = document.getElementById('caseNewResultAr').value.trim();
+    const imgFile = document.getElementById('caseNewImg').files[0];
+
+    if (!procedure || !concern || !approach || !result || !imgFile) {
+      showToast('Please fill in all fields and select a photo', true);
+      return;
+    }
+
+    const btn = document.getElementById('caseAddBtn');
+    btn.disabled = true;
+    btn.textContent = 'Uploading...';
+
+    try {
+      // Upload image
+      const imgBase64 = await readFileAsBase64(imgFile);
+      const imgExt = imgFile.name.split('.').pop().toLowerCase();
+      const imgFileName = 'before-after-' + procedure.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '') + '-' + (cases.length + 1) + '.' + imgExt;
+      await uploadFileToGitHub(imgBase64, imgFileName, true);
+
+      const newCase = {
+        img: 'assets/' + imgFileName,
+        procedure: procedure,
+        procedureAr: procedureAr,
+        concern: concern,
+        concernAr: concernAr,
+        approach: approach,
+        approachAr: approachAr,
+        result: result,
+        resultAr: resultAr,
+      };
+
+      cases.push(newCase);
+      rebuildCasesHTML();
+      renderCasesList();
+
+      // Clear form
+      document.getElementById('caseNewProcedure').value = '';
+      document.getElementById('caseNewProcedureAr').value = '';
+      document.getElementById('caseNewConcern').value = '';
+      document.getElementById('caseNewConcernAr').value = '';
+      document.getElementById('caseNewApproach').value = '';
+      document.getElementById('caseNewApproachAr').value = '';
+      document.getElementById('caseNewResult').value = '';
+      document.getElementById('caseNewResultAr').value = '';
+      document.getElementById('caseNewImg').value = '';
+
+      showToast('Case added! Click "Save to GitHub" to publish.');
+    } catch (err) {
+      showToast('Error: ' + err.message, true);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Add Case';
     }
   });
 
