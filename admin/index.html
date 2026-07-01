@@ -52,7 +52,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .editor-placeholder { display: flex; align-items: center; justify-content: center; flex: 1; text-align: center; color: rgba(0,0,0,0.35); }
 .editor-placeholder svg { width: 64px; height: 64px; opacity: 0.3; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto; }
 .editor-placeholder p { font-size: 15px; }
-#pageFrame { flex: 1; border: none; width: 100%; display: none; }
+#pageFrame { flex: 1; border: none; width: 100%; }
 
 /* Settings Modal */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
@@ -307,20 +307,29 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     const url = basePath + item.path;
 
     try {
-      const resp = await fetch(url);
+      // Bypass cache to always get fresh content
+      const resp = await fetch(url, { cache: 'no-store' });
       if (!resp.ok) throw new Error('Failed to load page');
       currentHTML = await resp.text();
       currentPage = item;
       changeCount = 0;
       updateBadge();
 
-      const frame = document.getElementById('pageFrame');
+      // Replace iframe to fully reset document state (fixes homepage reload issue)
+      const wrapper = document.querySelector('.editor-frame-wrapper');
+      const oldFrame = document.getElementById('pageFrame');
+      if (oldFrame) oldFrame.remove();
+      const newFrame = document.createElement('iframe');
+      newFrame.id = 'pageFrame';
+      newFrame.sandbox = 'allow-same-origin allow-scripts';
+      newFrame.style.cssText = 'flex:1;border:none;width:100%;';
+      wrapper.appendChild(newFrame);
+
       document.getElementById('editorPlaceholder').style.display = 'none';
       document.getElementById('editorHint').style.display = 'block';
-      frame.style.display = 'block';
 
       // Write content into iframe with correct base URL for assets
-      const frameDoc = frame.contentDocument || frame.contentWindow.document;
+      const frameDoc = newFrame.contentDocument || newFrame.contentWindow.document;
       // Calculate the base URL for the original page so relative paths (images, CSS) resolve correctly
       const pageDir = item.path.includes('/') ? basePath + item.path.substring(0, item.path.lastIndexOf('/') + 1) : basePath;
       const baseTag = '<base href="' + pageDir + '">';
