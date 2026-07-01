@@ -420,11 +420,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     modified.forEach(el => {
       const original = el.getAttribute('data-original');
       const newContent = el.innerHTML;
+      const tagName = el.tagName.toLowerCase();
 
-      // Find and replace original content in source HTML
-      const idx = html.indexOf(original);
+      // Use closing tag as context to match the correct element
+      // This prevents matching text inside <title> or other tags
+      const searchStr = original + '</' + tagName + '>';
+      const replaceStr = newContent + '</' + tagName + '>';
+
+      const idx = html.indexOf(searchStr);
       if (idx !== -1) {
-        html = html.substring(0, idx) + newContent + html.substring(idx + original.length);
+        html = html.substring(0, idx) + replaceStr + html.substring(idx + searchStr.length);
       }
     });
 
