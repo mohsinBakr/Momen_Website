@@ -1437,6 +1437,15 @@ html[dir="rtl"] .case-popup-header { direction: rtl; }
   text-decoration: none;
 }
 
+
+/* Case Slider */
+.results-compare { position: relative; }
+.results-compare .compare-frame { display: none; }
+.results-compare .compare-frame.active { display: block; }
+.case-slider-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 40px; height: 40px; border-radius: 50%; background: rgba(30,57,50,0.7); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: background .2s; }
+.case-slider-btn:hover { background: rgba(30,57,50,0.9); }
+.case-slider-prev { left: 12px; }
+.case-slider-next { right: 12px; }
 </style>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script>
@@ -1680,7 +1689,7 @@ html[dir="rtl"] .case-popup-header { direction: rtl; }
       </p>
     </div>
 
-    <div class="results-compare" id="compare" data-reveal="right">
+        <div class="results-compare" id="compare" data-reveal="right">
       <div class="compare-frame"
         data-case-img="assets/before-after.png"
         data-case-procedure="Liposuction"
@@ -1696,10 +1705,31 @@ html[dir="rtl"] .case-popup-header { direction: rtl; }
           <span data-i18n="results.viewCase">View Case</span> <i data-lucide="arrow-right"></i>
         </a>
       </div>
+      <div class="compare-frame"
+        data-case-img="assets/before-after-facelift-neck-lift-2.jpeg"
+        data-case-procedure="Facelift & Neck Lift"
+        data-case-procedure-ar="شد الوجه والرقبة"
+        data-case-concern="neck lift"
+        data-case-concern-ar="اي شكووو"
+        data-case-approach="lifting neck"
+        data-case-approach-ar="رفع الرقبة"
+        data-case-result="stretching the neck leather"
+        data-case-result-ar="تم شد جلد الرقبة">
+        <div class="compare-img ba-composite" style="background-image:url('assets/before-after-facelift-neck-lift-2.jpeg')"></div>
+        <a class="pill pill-glass view-case" href="#">
+          <span data-i18n="results.viewCase">View Case</span> <i data-lucide="arrow-right"></i>
+        </a>
+      </div>
+      <button class="case-slider-btn case-slider-prev" aria-label="Previous case">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="case-slider-btn case-slider-next" aria-label="Next case">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
     </div>
   </div>
-  <div class="dots">
-    <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <div class="dots">
+    <span class="dot active"></span><span class="dot"></span>
   </div>
 </section>
 
@@ -2298,6 +2328,42 @@ html[dir="rtl"] .case-popup-header { direction: rtl; }
       window.open('https://web.whatsapp.com/send?phone=' + waPhone.replace('+', '') + '&text=' + msg, '_blank');
     }
   });
+
+  // Case Slider Auto
+  (function() {
+    var compare = document.getElementById('compare');
+    if (!compare) return;
+    var frames = compare.querySelectorAll('.compare-frame');
+    if (frames.length === 0) return;
+    var dots = compare.closest('.results') ? compare.closest('.results').querySelector('.dots') : null;
+    var allDots = dots ? dots.querySelectorAll('.dot') : [];
+    var current = 0;
+    var interval = null;
+
+    function showSlide(idx) {
+      frames.forEach(function(f, i) { f.classList.toggle('active', i === idx); });
+      allDots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+      current = idx;
+    }
+
+    function nextSlide() { showSlide((current + 1) % frames.length); }
+    function prevSlide() { showSlide((current - 1 + frames.length) % frames.length); }
+
+    function startAuto() { interval = setInterval(nextSlide, 5000); }
+    function resetAuto() { clearInterval(interval); startAuto(); }
+
+    showSlide(0);
+    if (frames.length > 1) {
+      startAuto();
+      var prevBtn = compare.querySelector('.case-slider-prev');
+      var nextBtn = compare.querySelector('.case-slider-next');
+      if (prevBtn) prevBtn.addEventListener('click', function() { prevSlide(); resetAuto(); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { nextSlide(); resetAuto(); });
+      allDots.forEach(function(dot, i) {
+        dot.addEventListener('click', function() { showSlide(i); resetAuto(); });
+      });
+    }
+  })();
 </script>
 </body>
 </html>
