@@ -574,24 +574,11 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
   fill: none;
 }
 /* Bottom row: 2 cards centered */
-.svc-grid .svc-card:nth-child(4),
-.svc-grid .svc-card:nth-child(5) {
-  grid-column: span 1;
-}
-.svc-grid::after {
-  content: '';
-  grid-column: 1;
-  display: none;
-}
 @media (min-width: 901px) {
   .svc-grid {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1100px;
   }
-  .svc-grid .svc-card:nth-child(1) { grid-column: 1 / span 2; }
-  .svc-grid .svc-card:nth-child(2) { grid-column: 3 / span 2; }
-  .svc-grid .svc-card:nth-child(3) { grid-column: 5 / span 2; }
-  .svc-grid .svc-card:nth-child(4) { grid-column: 2 / span 2; }
-  .svc-grid .svc-card:nth-child(5) { grid-column: 4 / span 2; }
 }
 @media (max-width: 900px) {
   .services { padding: 64px 20px; }
@@ -1556,11 +1543,11 @@ html[dir="rtl"] .case-popup-header { direction: rtl; }
 <section class="services" id="services">
 <h2 class="section-title-serif center" data-reveal="up" data-i18n="services.title">Plastic Surgery Services in Riyadh</h2>
 
-  <div class="svc-grid" data-reveal-stagger>
-    <!-- 1 — Facelift -->
+    <div class="svc-grid" data-reveal-stagger>
+    <!-- 1 — Facelift & Neck Lift -->
     <div class="svc-card" data-reveal="up"
       data-svc-img="assets/service-facelift.png"
-      data-svc-title="Facelift &amp; Neck Lift"
+      data-svc-title="Facelift & Neck Lift"
       data-svc-title-ar="شد الوجه والرقبة"
       data-svc-desc="Restore youthful contours with advanced facelift and neck lift techniques that deliver natural, long-lasting rejuvenation."
       data-svc-desc-ar="استعد ملامح الشباب مع تقنيات شد الوجه والرقبة المتقدمة التي تمنحك نتائج طبيعية ودائمة."
@@ -1578,10 +1565,10 @@ html[dir="rtl"] .case-popup-header { direction: rtl; }
       </a>
     </div>
 
-    <!-- 2 — Liposuction -->
+    <!-- 2 — Liposuction & Body Contouring -->
     <div class="svc-card" data-reveal="up"
       data-svc-img="assets/service-body-contouring.png"
-      data-svc-title="Liposuction &amp; Body Contouring"
+      data-svc-title="Liposuction & Body Contouring"
       data-svc-title-ar="شفط الدهون ونحت الجسم"
       data-svc-desc="Refine your body shape and enhance natural proportions with precision liposuction and contouring techniques."
       data-svc-desc-ar="حسّن شكل جسمك وعزز تناسقه الطبيعي مع تقنيات شفط الدهون ونحت الجسم الدقيقة."
@@ -1661,6 +1648,36 @@ html[dir="rtl"] .case-popup-header { direction: rtl; }
       <h3 class="svc-card-title" data-i18n="svc.rhino">Rhinoplasty</h3>
       <p class="svc-card-desc" data-i18n="svc.rhino.desc">Improve facial harmony through precise refinement.</p>
       <a class="svc-card-link" href="en/rhinoplasty-riyadh.html" data-svc-page-ar="ar/تجميل-الانف-الرياض.html">
+        <span data-i18n="svc.explore">Explore Treatment</span>
+        <span class="svc-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+      </a>
+    </div>
+
+    <!-- 6 — jsajasj -->
+    <div class="svc-card" data-reveal="up"
+      data-svc-img="assets/service-jsajasj.png"
+      data-svc-title="jsajasj"
+      data-svc-title-ar="سيشبشسيب"
+      data-svc-desc="sdfsdfsdgsdv
+dfsg
+dfh
+sdfh
+sdfhsdfhdsf"
+      data-svc-desc-ar="سشيسبسي
+سيلسياسيال
+بسيبسيلسيب
+سيلسيااسيا"
+      data-svc-hl="dsdfsdgsdg"
+      data-svc-hl-ar="يسيذسذسيذ"
+      data-svc-page="en/liposuction-riyadh.html"
+      data-svc-page-ar="ar/تكبير-الثدي-الرياض.html"
+      data-svc-blog="en/blog/best-rhinoplasty-surgeon-riyadh.html"
+      data-svc-blog-ar="ar/blog/تكلفة-شفط-الدهون-في-الرياض.html">
+      <span class="svc-card-number">6</span>
+      <div class="svc-card-icon"><img src="assets/svc-jsajasj.svg" alt="jsajasj icon"></div>
+      <h3 class="svc-card-title" data-i18n="svc.custom6">jsajasj</h3>
+      <p class="svc-card-desc" data-i18n="svc.custom6.desc">sdgsdgsdgsdgsdg</p>
+      <a class="svc-card-link" href="en/liposuction-riyadh.html" data-svc-page-ar="ar/تكبير-الثدي-الرياض.html">
         <span data-i18n="svc.explore">Explore Treatment</span>
         <span class="svc-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
       </a>
