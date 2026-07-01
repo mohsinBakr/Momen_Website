@@ -463,9 +463,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     try {
       const html = getModifiedHTML();
       const filePath = currentPage.path;
+      // Encode each path segment individually (preserve slashes)
+      const encodedPath = filePath.split('/').map(s => encodeURIComponent(s)).join('/');
 
       // Get current file SHA
-      const getResp = await fetch(`https://api.github.com/repos/${repo}/contents/${encodeURIComponent(filePath)}?ref=${branch}`, {
+      const getResp = await fetch(`https://api.github.com/repos/${repo}/contents/${encodedPath}?ref=${branch}`, {
         headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
       });
 
@@ -483,7 +485,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
       };
       if (sha) body.sha = sha;
 
-      const putResp = await fetch(`https://api.github.com/repos/${repo}/contents/${encodeURIComponent(filePath)}`, {
+      const putResp = await fetch(`https://api.github.com/repos/${repo}/contents/${encodedPath}`, {
         method: 'PUT',
         headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
