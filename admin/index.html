@@ -23,60 +23,58 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 .login-error { color: #d32f2f; font-size: 13px; margin-top: 12px; display: none; }
 
 /* Dashboard */
-.dashboard { display: none; }
-.dash-header { background: linear-gradient(to right, #303c36, #3f5a52); color: #fff; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-.dash-header h1 { font-size: 18px; font-weight: 600; }
-.dash-header .logout-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-size: 13px; }
-.dash-header .logout-btn:hover { background: rgba(255,255,255,0.25); }
+.dashboard { display: none; height: 100vh; flex-direction: column; }
+.dash-header { background: linear-gradient(to right, #303c36, #3f5a52); color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; z-index: 100; flex-shrink: 0; }
+.dash-header h1 { font-size: 16px; font-weight: 600; }
+.header-actions { display: flex; gap: 10px; align-items: center; }
+.header-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 7px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; transition: background .2s; }
+.header-btn:hover { background: rgba(255,255,255,0.25); }
+.header-btn.save { background: #C6a77d; border-color: #C6a77d; color: #1a1a1a; font-weight: 600; }
+.header-btn.save:hover { background: #d4b68e; }
+.header-btn.save:disabled { opacity: 0.5; cursor: not-allowed; }
+.changes-badge { background: #ff5722; color: #fff; font-size: 11px; padding: 2px 7px; border-radius: 10px; margin-left: 6px; display: none; }
 
-.dash-body { display: flex; min-height: calc(100vh - 56px); }
+.dash-body { display: flex; flex: 1; overflow: hidden; }
 
 /* Sidebar */
-.sidebar { width: 280px; background: #fff; border-right: 1px solid #e0e0e0; padding: 24px 0; overflow-y: auto; }
-.sidebar h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: rgba(0,0,0,0.4); padding: 0 20px; margin-bottom: 12px; }
+.sidebar { width: 240px; background: #fff; border-right: 1px solid #e0e0e0; overflow-y: auto; flex-shrink: 0; }
+.sidebar h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(0,0,0,0.4); padding: 16px 16px 8px; }
 .sidebar ul { list-style: none; }
-.sidebar li { padding: 10px 20px; font-size: 14px; color: #333; cursor: pointer; border-left: 3px solid transparent; transition: all .15s; }
+.sidebar li { padding: 9px 16px; font-size: 13px; color: #333; cursor: pointer; border-left: 3px solid transparent; transition: all .15s; }
 .sidebar li:hover { background: #f7f7f7; }
 .sidebar li.active { background: #f0f7f4; border-left-color: #1E3932; color: #1E3932; font-weight: 600; }
-.sidebar .section-label { font-size: 12px; font-weight: 700; color: #1E3932; padding: 16px 20px 6px; pointer-events: none; }
+.sidebar .section-label { font-size: 11px; font-weight: 700; color: #1E3932; padding: 14px 16px 4px; pointer-events: none; }
 
-/* Editor Area */
-.editor-area { flex: 1; padding: 32px; overflow-y: auto; }
-.editor-placeholder { text-align: center; color: rgba(0,0,0,0.35); padding-top: 120px; }
-.editor-placeholder svg { width: 64px; height: 64px; opacity: 0.3; margin-bottom: 16px; }
+/* Editor Frame */
+.editor-frame-wrapper { flex: 1; display: flex; flex-direction: column; position: relative; }
+.editor-hint { background: #fffde7; border-bottom: 1px solid #f0e68c; padding: 8px 20px; font-size: 13px; color: #5d4037; display: none; flex-shrink: 0; }
+.editor-hint strong { color: #1E3932; }
+.editor-placeholder { display: flex; align-items: center; justify-content: center; flex: 1; text-align: center; color: rgba(0,0,0,0.35); }
+.editor-placeholder svg { width: 64px; height: 64px; opacity: 0.3; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto; }
 .editor-placeholder p { font-size: 15px; }
+#pageFrame { flex: 1; border: none; width: 100%; display: none; }
 
-.editor-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-.editor-toolbar h2 { font-size: 20px; color: #1E3932; }
-.save-btn { padding: 10px 24px; background: #1E3932; color: #fff; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .2s; }
-.save-btn:hover { background: #2a5a4a; }
-.save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+/* Settings Modal */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: #fff; border-radius: 12px; padding: 32px; width: 100%; max-width: 480px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+.modal h3 { font-size: 18px; color: #1E3932; margin-bottom: 20px; }
+.modal .form-group input { max-width: 100%; }
+.modal .info-text { font-size: 12px; color: rgba(0,0,0,0.45); margin-top: 4px; }
+.modal-actions { display: flex; gap: 10px; margin-top: 24px; justify-content: flex-end; }
+.modal-actions button { padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; border: none; }
+.modal-actions .btn-primary { background: #1E3932; color: #fff; font-weight: 600; }
+.modal-actions .btn-secondary { background: #eee; color: #333; }
 
-.editor-content { background: #fff; border-radius: 10px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-.edit-block { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #f0f0f0; }
-.edit-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-.edit-block label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(0,0,0,0.4); margin-bottom: 6px; font-weight: 600; }
-.edit-block textarea { width: 100%; border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 14px; line-height: 1.6; resize: vertical; min-height: 60px; font-family: inherit; transition: border-color .2s; }
-.edit-block textarea:focus { outline: none; border-color: #1E3932; }
-.edit-block .tag-indicator { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 11px; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
-
-/* GitHub Settings */
-.settings-panel { display: none; background: #fff; border-radius: 10px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); margin-bottom: 24px; }
-.settings-panel h3 { font-size: 16px; color: #1E3932; margin-bottom: 16px; }
-.settings-panel .form-group input { max-width: 500px; }
-.settings-panel .info-text { font-size: 12px; color: rgba(0,0,0,0.45); margin-top: 4px; }
-
-/* Toast notification */
+/* Toast */
 .toast { position: fixed; bottom: 24px; right: 24px; background: #1E3932; color: #fff; padding: 14px 24px; border-radius: 8px; font-size: 14px; display: none; z-index: 1000; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .toast.error { background: #d32f2f; }
 .toast.show { display: block; animation: slideUp .3s ease; }
 @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-/* Responsive */
 @media (max-width: 768px) {
   .dash-body { flex-direction: column; }
-  .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e0e0e0; max-height: 200px; }
-  .editor-area { padding: 20px; }
+  .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e0e0e0; max-height: 160px; }
 }
 </style>
 </head>
@@ -106,9 +104,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 <div class="dashboard" id="dashboard">
   <header class="dash-header">
     <h1>Content Manager</h1>
-    <div style="display:flex;gap:12px;align-items:center;">
-      <button class="logout-btn" id="settingsBtn">⚙ Settings</button>
-      <button class="logout-btn" id="logoutBtn">Logout</button>
+    <div class="header-actions">
+      <button class="header-btn" id="settingsBtn">⚙ Settings</button>
+      <button class="header-btn save" id="commitBtn" disabled>Save to GitHub<span class="changes-badge" id="changesBadge">0</span></button>
+      <button class="header-btn" id="downloadBtn" style="display:none;">↓ Download</button>
+      <button class="header-btn" id="logoutBtn">Logout</button>
     </div>
   </header>
 
@@ -118,46 +118,44 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
       <ul id="pageList"></ul>
     </aside>
 
-    <main class="editor-area" id="editorArea">
-      <!-- Settings Panel -->
-      <div class="settings-panel" id="settingsPanel">
-        <h3>GitHub Integration</h3>
-        <p style="font-size:13px;color:rgba(0,0,0,0.6);margin-bottom:20px;">Connect to GitHub to save changes directly to your repository.</p>
-        <div class="form-group">
-          <label>Repository (owner/repo)</label>
-          <input type="text" id="ghRepo" placeholder="e.g. username/Momen_Website">
-          <p class="info-text">The GitHub repository where your site is hosted.</p>
-        </div>
-        <div class="form-group">
-          <label>Branch</label>
-          <input type="text" id="ghBranch" value="main" placeholder="main">
-        </div>
-        <div class="form-group">
-          <label>Personal Access Token</label>
-          <input type="password" id="ghToken" placeholder="ghp_...">
-          <p class="info-text">Needs "Contents" write permission. Token is stored locally in your browser only.</p>
-        </div>
-        <button class="save-btn" id="saveSettings" style="margin-top:12px;">Save Settings</button>
+    <div class="editor-frame-wrapper">
+      <div class="editor-hint" id="editorHint">
+        <strong>Editing mode:</strong> Click on any text in the page below to edit it. Changed text is highlighted in yellow.
       </div>
-
-      <!-- Editor Placeholder -->
       <div class="editor-placeholder" id="editorPlaceholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        <p>Select a page from the sidebar to edit its content</p>
-      </div>
-
-      <!-- Editor Content (populated dynamically) -->
-      <div id="editorContent" style="display:none;">
-        <div class="editor-toolbar">
-          <h2 id="editorTitle">Page Title</h2>
-          <div style="display:flex;gap:10px;">
-            <button class="save-btn" id="downloadBtn" style="background:#555;">↓ Download</button>
-            <button class="save-btn" id="commitBtn">Save to GitHub</button>
-          </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <p>Select a page from the sidebar to start editing</p>
         </div>
-        <div class="editor-content" id="editBlocks"></div>
       </div>
-    </main>
+      <iframe id="pageFrame" sandbox="allow-same-origin"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <h3>GitHub Settings</h3>
+    <p style="font-size:13px;color:rgba(0,0,0,0.6);margin-bottom:20px;">Connect to GitHub to save changes directly to your repository.</p>
+    <div class="form-group">
+      <label>Repository (owner/repo)</label>
+      <input type="text" id="ghRepo" placeholder="e.g. username/Momen_Website">
+      <p class="info-text">The GitHub repository where your site is hosted.</p>
+    </div>
+    <div class="form-group">
+      <label>Branch</label>
+      <input type="text" id="ghBranch" value="main" placeholder="main">
+    </div>
+    <div class="form-group">
+      <label>Personal Access Token</label>
+      <input type="password" id="ghToken" placeholder="ghp_...">
+      <p class="info-text">Needs "Contents" write permission. Stored locally in your browser only.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="closeSettings">Cancel</button>
+      <button class="btn-primary" id="saveSettings">Save Settings</button>
+    </div>
   </div>
 </div>
 
@@ -203,7 +201,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
   let currentPage = null;
   let currentHTML = '';
-  let currentDoc = null;
+  let changeCount = 0;
 
   // --- Utility ---
   async function sha256(str) {
@@ -217,6 +215,22 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     t.textContent = msg;
     t.className = 'toast show' + (isError ? ' error' : '');
     setTimeout(() => t.className = 'toast', 3000);
+  }
+
+  function updateBadge() {
+    const badge = document.getElementById('changesBadge');
+    const btn = document.getElementById('commitBtn');
+    const dlBtn = document.getElementById('downloadBtn');
+    if (changeCount > 0) {
+      badge.textContent = changeCount;
+      badge.style.display = 'inline';
+      btn.disabled = false;
+      dlBtn.style.display = 'inline-block';
+    } else {
+      badge.style.display = 'none';
+      btn.disabled = true;
+      dlBtn.style.display = 'none';
+    }
   }
 
   // --- Auth ---
@@ -233,7 +247,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
   function showDashboard() {
     document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
+    const dash = document.getElementById('dashboard');
+    dash.style.display = 'flex';
     sessionStorage.setItem('admin_auth', 'true');
     renderSidebar();
   }
@@ -246,7 +261,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     document.getElementById('password').value = '';
   }
 
-  // --- Login form ---
+  // --- Login ---
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const user = document.getElementById('username').value.trim();
@@ -281,13 +296,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     });
   }
 
-  // --- Load page for editing ---
+  // --- Load page into iframe ---
   async function loadPage(item) {
-    // Highlight active
     document.querySelectorAll('#pageList li').forEach(li => li.classList.remove('active'));
-    document.querySelector(`#pageList li[data-path="${item.path}"]`).classList.add('active');
+    const activeLi = document.querySelector('#pageList li[data-path="' + item.path + '"]');
+    if (activeLi) activeLi.classList.add('active');
 
-    // Fetch page content
     const basePath = window.location.pathname.replace(/\/admin\/?.*$/, '/');
     const url = basePath + item.path;
 
@@ -296,100 +310,121 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
       if (!resp.ok) throw new Error('Failed to load page');
       currentHTML = await resp.text();
       currentPage = item;
+      changeCount = 0;
+      updateBadge();
 
-      // Parse and extract editable text
-      const parser = new DOMParser();
-      currentDoc = parser.parseFromString(currentHTML, 'text/html');
-      renderEditor();
+      const frame = document.getElementById('pageFrame');
+      document.getElementById('editorPlaceholder').style.display = 'none';
+      document.getElementById('editorHint').style.display = 'block';
+      frame.style.display = 'block';
+
+      // Write content into iframe
+      const frameDoc = frame.contentDocument || frame.contentWindow.document;
+      frameDoc.open();
+      frameDoc.write(currentHTML);
+      frameDoc.close();
+
+      // Inject editing behavior after content loads
+      setTimeout(() => injectEditor(frameDoc), 400);
     } catch (err) {
       showToast('Error loading page: ' + err.message, true);
     }
   }
 
-  // --- Render editor blocks ---
-  function renderEditor() {
-    document.getElementById('editorPlaceholder').style.display = 'none';
-    document.getElementById('settingsPanel').style.display = 'none';
-    document.getElementById('editorContent').style.display = 'block';
-    document.getElementById('editorTitle').textContent = currentPage.name;
+  // --- Inject inline editing into iframe ---
+  function injectEditor(doc) {
+    // Add editing styles
+    const style = doc.createElement('style');
+    style.id = 'admin-edit-styles';
+    style.textContent = `
+      [data-editable] {
+        cursor: text !important;
+        transition: outline 0.15s, background 0.15s;
+        border-radius: 3px;
+      }
+      [data-editable]:hover {
+        outline: 2px dashed rgba(30, 57, 50, 0.4) !important;
+        outline-offset: 3px;
+      }
+      [data-editable]:focus {
+        outline: 2px solid #1E3932 !important;
+        outline-offset: 3px;
+        background: rgba(255, 255, 220, 0.3) !important;
+      }
+      [data-editable].modified {
+        background: rgba(255, 235, 59, 0.18) !important;
+        box-shadow: inset 4px 0 0 #C6a77d;
+      }
+    `;
+    doc.head.appendChild(style);
 
-    const container = document.getElementById('editBlocks');
-    container.innerHTML = '';
+    // Mark all text-bearing elements as editable
+    const selectors = 'h1, h2, h3, h4, h5, h6, p, li, td, th, figcaption, blockquote';
+    const elements = doc.querySelectorAll(selectors);
 
-    // Find all text-bearing elements in the body
-    const body = currentDoc.body;
-    const editableSelectors = 'h1, h2, h3, h4, h5, h6, p, li, a, span, td, th, figcaption, blockquote, label';
-    const elements = body.querySelectorAll(editableSelectors);
-
-    let blockIndex = 0;
     elements.forEach(el => {
-      // Skip nav/header/footer navigation links and script/style content
       if (el.closest('script, style, noscript')) return;
-      
-      // Get direct text content (not children's text for containers)
-      const text = getDirectText(el);
-      if (!text || text.trim().length < 2) return;
+      if (!el.textContent || el.textContent.trim().length < 2) return;
+      // Skip parent elements that contain other editable blocks (avoid nesting)
+      if (el.querySelector('h1,h2,h3,h4,h5,h6,p,li,td,th')) return;
 
-      const block = document.createElement('div');
-      block.className = 'edit-block';
+      el.setAttribute('data-editable', 'true');
+      el.setAttribute('data-original', el.innerHTML);
+      el.setAttribute('contenteditable', 'true');
+      el.setAttribute('spellcheck', 'true');
 
-      const label = document.createElement('label');
-      const tag = el.tagName.toLowerCase();
-      const section = getParentSection(el);
-      label.innerHTML = `${section} <span class="tag-indicator">&lt;${tag}&gt;</span>`;
+      // Track changes on input
+      el.addEventListener('input', () => {
+        const original = el.getAttribute('data-original');
+        const isChanged = el.innerHTML !== original;
+        const wasChanged = el.classList.contains('modified');
 
-      const textarea = document.createElement('textarea');
-      textarea.value = text.trim();
-      textarea.dataset.index = blockIndex;
-      textarea.rows = Math.max(2, Math.ceil(text.length / 80));
+        if (isChanged && !wasChanged) {
+          el.classList.add('modified');
+          changeCount++;
+          updateBadge();
+        } else if (!isChanged && wasChanged) {
+          el.classList.remove('modified');
+          changeCount--;
+          updateBadge();
+        }
+      });
 
-      // Store reference for saving
-      textarea.dataset.originalText = text.trim();
-      textarea._element = el;
-
-      block.appendChild(label);
-      block.appendChild(textarea);
-      container.appendChild(block);
-      blockIndex++;
+      // Prevent link clicks while editing
+      el.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (link) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
     });
 
-    if (blockIndex === 0) {
-      container.innerHTML = '<p style="color:rgba(0,0,0,0.4);text-align:center;padding:40px;">No editable text content found on this page.</p>';
-    }
+    // Block all link navigation in iframe
+    doc.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (link) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
   }
 
-  function getDirectText(el) {
-    // Get the text content, handling elements that might have mixed content
-    if (el.children.length === 0) {
-      return el.textContent;
-    }
-    // For elements with children, get the full innerHTML text representation
-    return el.textContent;
-  }
-
-  function getParentSection(el) {
-    // Try to find a parent section or meaningful context
-    const section = el.closest('section, article, header, footer, aside, main, div[class]');
-    if (section) {
-      const cls = section.className || section.tagName.toLowerCase();
-      return cls.split(' ')[0].replace(/^svc-/, '').replace(/-/g, ' ');
-    }
-    return 'body';
-  }
-
-  // --- Apply edits and get modified HTML ---
+  // --- Get modified HTML from iframe ---
   function getModifiedHTML() {
-    const textareas = document.querySelectorAll('#editBlocks textarea');
+    const frame = document.getElementById('pageFrame');
+    const doc = frame.contentDocument || frame.contentWindow.document;
     let html = currentHTML;
 
-    textareas.forEach(ta => {
-      const original = ta.dataset.originalText;
-      const newText = ta.value.trim();
-      if (original !== newText && original.length > 0) {
-        // Escape special regex characters in the original text
-        const escaped = original.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const regex = new RegExp(escaped, 'g');
-        html = html.replace(regex, newText);
+    const modified = doc.querySelectorAll('[data-editable].modified');
+    modified.forEach(el => {
+      const original = el.getAttribute('data-original');
+      const newContent = el.innerHTML;
+
+      // Find and replace original content in source HTML
+      const idx = html.indexOf(original);
+      if (idx !== -1) {
+        html = html.substring(0, idx) + newContent + html.substring(idx + original.length);
       }
     });
 
@@ -406,7 +441,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     a.download = currentPage.path.split('/').pop();
     a.click();
     URL.revokeObjectURL(url);
-    showToast('File downloaded successfully');
+    showToast('File downloaded!');
   });
 
   // --- GitHub commit ---
@@ -417,7 +452,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
     if (!repo || !token) {
       showToast('Please configure GitHub settings first', true);
-      document.getElementById('settingsPanel').style.display = 'block';
+      document.getElementById('settingsModal').classList.add('show');
       return;
     }
 
@@ -460,28 +495,35 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
       }
 
       showToast('Changes saved to GitHub!');
-      // Update the stored HTML to reflect changes
       currentHTML = html;
+      changeCount = 0;
+      updateBadge();
+
+      // Mark all as saved in iframe
+      const frame = document.getElementById('pageFrame');
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      doc.querySelectorAll('[data-editable].modified').forEach(el => {
+        el.setAttribute('data-original', el.innerHTML);
+        el.classList.remove('modified');
+      });
     } catch (err) {
       showToast('Error: ' + err.message, true);
     } finally {
-      btn.disabled = false;
-      btn.textContent = 'Save to GitHub';
+      btn.disabled = changeCount === 0;
+      btn.innerHTML = 'Save to GitHub<span class="changes-badge" id="changesBadge" style="' + (changeCount > 0 ? '' : 'display:none') + '">' + changeCount + '</span>';
     }
   });
 
-  // --- Settings ---
+  // --- Settings Modal ---
   document.getElementById('settingsBtn').addEventListener('click', () => {
-    const panel = document.getElementById('settingsPanel');
-    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-    document.getElementById('editorContent').style.display = 'none';
-    document.getElementById('editorPlaceholder').style.display = 'none';
-    panel.style.display = 'block';
-
-    // Load saved settings
     document.getElementById('ghRepo').value = localStorage.getItem('gh_repo') || '';
     document.getElementById('ghBranch').value = localStorage.getItem('gh_branch') || 'main';
     document.getElementById('ghToken').value = localStorage.getItem('gh_token') || '';
+    document.getElementById('settingsModal').classList.add('show');
+  });
+
+  document.getElementById('closeSettings').addEventListener('click', () => {
+    document.getElementById('settingsModal').classList.remove('show');
   });
 
   document.getElementById('saveSettings').addEventListener('click', () => {
@@ -494,8 +536,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     if (token) localStorage.setItem('gh_token', token);
 
     showToast('Settings saved');
-    document.getElementById('settingsPanel').style.display = 'none';
-    document.getElementById('editorPlaceholder').style.display = 'block';
+    document.getElementById('settingsModal').classList.remove('show');
   });
 
   // --- Init ---
