@@ -128,7 +128,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
           <p>Select a page from the sidebar to start editing</p>
         </div>
       </div>
-      <iframe id="pageFrame" sandbox="allow-same-origin"></iframe>
+      <iframe id="pageFrame" sandbox="allow-same-origin allow-scripts"></iframe>
     </div>
   </div>
 </div>
@@ -318,10 +318,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
       document.getElementById('editorHint').style.display = 'block';
       frame.style.display = 'block';
 
-      // Write content into iframe
+      // Write content into iframe with correct base URL for assets
       const frameDoc = frame.contentDocument || frame.contentWindow.document;
+      // Calculate the base URL for the original page so relative paths (images, CSS) resolve correctly
+      const pageDir = item.path.includes('/') ? basePath + item.path.substring(0, item.path.lastIndexOf('/') + 1) : basePath;
+      const baseTag = '<base href="' + pageDir + '">';
+      const htmlWithBase = currentHTML.replace(/<head([^>]*)>/i, '<head$1>' + baseTag);
       frameDoc.open();
-      frameDoc.write(currentHTML);
+      frameDoc.write(htmlWithBase);
       frameDoc.close();
 
       // Inject editing behavior after content loads
