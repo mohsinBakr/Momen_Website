@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Best Plastic Surgeon in Riyadh | Dr. Moamen Bakr</title>
-<meta name="description" content="Dr. Moamen Bakr is a leading consultant plastic surgeon in Riyadh, Saudi Arabia with 14+ years of experience. Specializing in rhinoplasty, facelift, liposuction, breast augmentation, and mommy makeover procedures with natural, refined results.">
+<title>One of the Best Plastic Surgeon in Riyadh | Dr. Moamen Bakr</title>
+<meta name="description" content="Dr. Moamen Bakr is a leading senior registrar plastic surgeon in Riyadh, Saudi Arabia with 14+ years of experience. Specializing in rhinoplasty, facelift, liposuction, breast augmentation, and mommy makeover procedures with natural, refined results.">
 <meta name="keywords" content="best plastic surgeon Riyadh, plastic surgery Riyadh, rhinoplasty Riyadh, facelift Riyadh, liposuction Riyadh, breast augmentation Riyadh, mommy makeover Riyadh, Dr Moamen Bakr">
 <meta name="author" content="Dr. Moamen Bakr">
 <meta name="robots" content="index, follow">
@@ -15,7 +15,7 @@
 
 <!-- Open Graph -->
 <meta property="og:title" content="Best Plastic Surgeon in Riyadh | Dr. Moamen Bakr">
-<meta property="og:description" content="Consultant plastic surgeon in Riyadh with 14+ years of experience. Natural, refined results in rhinoplasty, facelift, liposuction & more.">
+<meta property="og:description" content="Senior registrar plastic surgeon in Riyadh with 14+ years of experience. Natural, refined results in rhinoplasty, facelift, liposuction & more.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dr-moamenbakr.com/">
 <meta property="og:image" content="https://dr-moamenbakr.com/assets/doctor-hero.png">
@@ -29,7 +29,7 @@
   "@type": "Physician",
   "name": "Dr. Moamen Bakr",
   "alternateName": "د. مؤمن بكر",
-  "description": "Consultant Plastic Surgeon in Riyadh, Saudi Arabia with over 14 years of experience in aesthetic and reconstructive surgery.",
+  "description": "Senior Registrar Plastic Surgeon in Riyadh, Saudi Arabia with over 14 years of experience in aesthetic and reconstructive surgery.",
   "medicalSpecialty": "Plastic Surgery",
   "url": "https://dr-moamenbakr.com/",
   "image": "https://dr-moamenbakr.com/assets/doctor-hero.png",
@@ -58,7 +58,14 @@
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'DIN Next LT Arabic';
+  src: url('assets/DINNextLTArabic-Regular-3.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   font-size: 62.5%;
@@ -207,8 +214,12 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 .lang-toggle button:hover:not(.active) { color: #fff; }
 
 /* ---------- RTL SUPPORT ---------- */
+html[dir="rtl"] {
+  --font-sans: 'DIN Next LT Arabic', 'Inter', sans-serif;
+  --font-serif: 'DIN Next LT Arabic', 'Optima', sans-serif;
+}
 html[dir="rtl"] body {
-  font-family: 'Noto Sans Arabic', var(--font-sans);
+  font-family: var(--font-sans);
   letter-spacing: 0;
 }
 html[dir="rtl"] .hero-title,
@@ -220,16 +231,7 @@ html[dir="rtl"] .wa-modal h3,
 html[dir="rtl"] .svc-modal-title,
 html[dir="rtl"] .why-body h3,
 html[dir="rtl"] .contact-label {
-  font-family: 'Noto Sans Arabic', var(--font-serif);
   letter-spacing: 0;
-}
-html[dir="rtl"] .hero-sub,
-html[dir="rtl"] .about-lede,
-html[dir="rtl"] .testi-body,
-html[dir="rtl"] .svc-modal-desc,
-html[dir="rtl"] .contact-form input,
-html[dir="rtl"] .contact-form textarea {
-  font-family: 'Noto Sans Arabic', var(--font-serif);
 }
 html[dir="rtl"] .about-photo {
   border-radius: 36px 0 0 36px;
@@ -272,7 +274,7 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
 .hero {
   position: relative;
   background: linear-gradient(to right, #f7f5f2, #Efeae4);
-  padding: 40px 40px 0;
+  padding: 5px 5px 0;
   overflow: hidden;
 }
 .hero-inner {
@@ -712,6 +714,182 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
   transition: background .2s var(--ease);
 }
 .dots .dot.active { background: var(--gold-soft); }
+
+/* ---------- CASE POPUP ---------- */
+.case-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s var(--ease), visibility .35s;
+}
+.case-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+.case-popup {
+  position: relative;
+  width: 94%;
+  max-width: 900px;
+  max-height: 92vh;
+  overflow: hidden;
+  transform: translateY(24px) scale(0.96);
+  transition: transform .4s var(--ease);
+}
+.case-overlay.open .case-popup {
+  transform: translateY(0) scale(1);
+}
+.case-popup-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  z-index: 3;
+  transition: background .2s var(--ease);
+}
+.case-popup-close:hover { background: rgba(255,255,255,0.3); }
+.case-popup-close i { width: 20px; height: 20px; }
+.case-popup-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #111;
+}
+.case-popup-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.case-popup-img .case-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+}
+.case-popup-img .case-label-after { left: 0; border-radius: 0 8px 8px 0; }
+.case-popup-img .case-label-before { right: 0; border-radius: 8px 0 0 8px; }
+.case-popup-details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #f7f5f2;
+  border-radius: 18px 18px 18px 18px;
+  padding: 10px 28px;
+  transform: translateY(calc(100% - 52px));
+  transition: transform .4s cubic-bezier(.4,0,.2,1);
+  z-index: 5;
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+.case-popup-details.expanded {
+  transform: translateY(0);
+  cursor: default;
+}
+.case-details-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 0 12px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-ink-soft);
+  cursor: pointer;
+  user-select: none;
+}
+.case-details-toggle svg {
+  width: 20px; height: 20px;
+  transition: transform .3s ease;
+}
+.case-popup-details.expanded .case-details-toggle svg {
+  transform: rotate(180deg);
+}
+.case-popup-content {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity .3s ease .1s, max-height .4s cubic-bezier(.4,0,.2,1);
+}
+.case-popup-details.expanded .case-popup-content {
+  opacity: 1;
+  max-height: 500px;
+}
+.case-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.case-popup-header h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 2.2rem;
+  color: var(--text-ink);
+  margin: 0;
+}
+.case-popup-header .pill {
+  font-size: 1.3rem;
+  padding: 10px 22px;
+}
+.case-popup-table {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.case-popup-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  align-items: center;
+}
+.case-popup-row:last-child { border-bottom: none; }
+.case-popup-row dt {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--green-deep);
+}
+.case-popup-row dd {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--text-ink-soft);
+}
+@media (max-width: 600px) {
+  .case-popup { width: 98%; }
+  .case-popup-img { aspect-ratio: 4/3; }
+  .case-popup-row { grid-template-columns: 110px 1fr; padding: 12px 16px; }
+  .case-popup-header h3 { font-size: 1.8rem; }
+  .case-popup-details { padding: 24px 18px; }
+  .case-popup-details { transform: translateY(calc(100% - 46px)); }
+}
+html[dir="rtl"] .case-popup-row { direction: rtl; }
+html[dir="rtl"] .case-popup-header { direction: rtl; }
 
 @media (max-width: 900px) {
   .results-inner { grid-template-columns: 1fr; padding: 28px; }
@@ -1315,7 +1493,7 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
         Through Precision &amp; Expertise
       </h1>
       <p class="hero-sub" data-reveal="up" data-i18n="hero.sub">
-        Led by <strong>Dr. Moamen Bakr</strong>, a consultant plastic surgeon in Riyadh with over 14
+        Led by <strong>Dr. Moamen Bakr</strong>, a senior registrar plastic surgeon in Riyadh with over 14
         years of experience, delivering natural, refined, and safe results.
       </p>
       <a class="pill pill-dark hero-cta" data-reveal="up" href="#" onclick="openWaModal(event)" data-i18n="hero.cta">
@@ -1323,13 +1501,13 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       </a>
     </div>
     <div class="hero-portrait" data-reveal="right">
-      <img src="assets/doctor-hero.png" alt="Dr. Moamen Bakr - Best plastic surgeon in Riyadh, Saudi Arabia">
+      <img src="assets/doctor-hero.png" alt="Dr. Moamen Bakr - One of the Best plastic surgeon in Riyadh, Saudi Arabia">
     </div>
   </div>
   <div class="hero-strip" data-reveal="up">
     <span data-i18n="hero.strip1">14+ Years Experience</span>
     <span class="dot-sep" aria-hidden="true"></span>
-    <span data-i18n="hero.strip2">Consultant Surgeon</span>
+    <span data-i18n="hero.strip2">Senior Registrar</span>
     <span class="dot-sep" aria-hidden="true"></span>
     <span data-i18n="hero.strip3">International Experience</span>
   </div>
@@ -1365,20 +1543,13 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       <span class="credentials-card-label" data-i18n="cred.lbl2">Plastic Surgery</span>
     </div>
     <div class="credentials-card">
-      <span class="credentials-card-value" data-i18n="cred.val3">Consultant</span>
+      <span class="credentials-card-value" data-i18n="cred.val3">Senior Registrar</span>
       <span class="credentials-card-label" data-i18n="cred.lbl3">Plastic Surgeon</span>
     </div>
     <div class="credentials-card">
-      <span class="credentials-card-value" data-i18n="cred.val4">Associate Professor</span>
+      <span class="credentials-card-value" data-i18n="cred.val4">Lecturer</span>
       <span class="credentials-card-label" data-i18n="cred.lbl4">Faculty of Medicine</span>
     </div>
-  </div>
-
-  <div class="credentials-affiliations" data-reveal="up">
-    <span>ESPRS</span>
-    <span data-i18n="cred.aff2">Volunteer Surgeon</span>
-    <span>Operation Smile</span>
-    <span>ESSHM</span>
   </div>
 </section>
 
@@ -1511,7 +1682,16 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
     </div>
 
     <div class="results-compare" id="compare" data-reveal="right">
-      <div class="compare-frame">
+      <div class="compare-frame"
+        data-case-img="assets/before-after.png"
+        data-case-procedure="Liposuction"
+        data-case-procedure-ar="شفط الدهون"
+        data-case-concern="Stubborn abdominal fat"
+        data-case-concern-ar="دهون البطن العنيدة"
+        data-case-approach="Targeted liposuction with contour refinement"
+        data-case-approach-ar="شفط دهون مستهدف مع تحسين محيط الجسم"
+        data-case-result="Improved body shape with natural definition"
+        data-case-result-ar="تحسين شكل الجسم بتحديد طبيعي">
         <div class="compare-img ba-composite" style="background-image:url('assets/before-after.png')"></div>
         <a class="pill pill-glass view-case" href="#">
           <span data-i18n="results.viewCase">View Case</span> <i data-lucide="arrow-right"></i>
@@ -1596,11 +1776,11 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
           <div class="contact-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="04602a696b3669616a666f76446369656d682a676b69">d.mo2menbkr@gmail.com</a></div>
         </div>
         <div>
-          <div class="contact-label" data-i18n="contact.socialLabel">Social network</div>
+          <div class="contact-label" data-i18n="contact.socialLabel">Social Media</div>
           <div class="contact-socials">
-            <a aria-label="Instagram" href="#"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5Zm4.25 3a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm5.75-.88a1.13 1.13 0 1 1 0 2.25 1.13 1.13 0 0 1 0-2.25Z"/></svg></a>
-            <a aria-label="Snapchat" href="#"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.63 0 4.47.86 5.54 2.56.7 1.1.96 2.36.96 4.24v1.4c.94.14 1.5.58 1.5 1.1 0 .56-.64 1.02-1.68 1.14-.28 1.3-.92 2.34-1.88 3.12-.6.5-1.26.84-1.68 1.02.06.28.2.52.44.72.32.26.74.42 1.22.5.62.1 1.3.16 1.78.54.34.28.5.64.5 1.06 0 1.06-2.06 1.78-3.86 1.98-.18.22-.28.58-.54.98-.3.5-.72.64-1.3.64-.34 0-.76-.08-1.3-.24a7.5 7.5 0 0 0-1.7-.28c-.58 0-1.12.1-1.7.28-.54.16-.96.24-1.3.24-.58 0-1-.14-1.3-.64-.26-.4-.36-.76-.54-.98C5.36 21.38 3.3 20.66 3.3 19.6c0-.42.16-.78.5-1.06.48-.38 1.16-.44 1.78-.54.48-.08.9-.24 1.22-.5.24-.2.38-.44.44-.72-.42-.18-1.08-.52-1.68-1.02-.96-.78-1.6-1.82-1.88-3.12C2.64 12.52 2 12.06 2 11.5c0-.52.56-.96 1.5-1.1v-1.4c0-1.88.26-3.14.96-4.24C5.53 2.86 7.37 2 12 2Z"/></svg></a>
-            <a aria-label="TikTok" href="#"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.13 2.57 5.7 5.7 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48Z"/></svg></a>
+            <a aria-label="Instagram" href="https://www.instagram.com/drmoamenbakr" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5Zm4.25 3a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm5.75-.88a1.13 1.13 0 1 1 0 2.25 1.13 1.13 0 0 1 0-2.25Z"/></svg></a>
+            <a aria-label="Snapchat" href="https://www.snapchat.com/@drmoamenbakr1" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.63 0 4.47.86 5.54 2.56.7 1.1.96 2.36.96 4.24v1.4c.94.14 1.5.58 1.5 1.1 0 .56-.64 1.02-1.68 1.14-.28 1.3-.92 2.34-1.88 3.12-.6.5-1.26.84-1.68 1.02.06.28.2.52.44.72.32.26.74.42 1.22.5.62.1 1.3.16 1.78.54.34.28.5.64.5 1.06 0 1.06-2.06 1.78-3.86 1.98-.18.22-.28.58-.54.98-.3.5-.72.64-1.3.64-.34 0-.76-.08-1.3-.24a7.5 7.5 0 0 0-1.7-.28c-.58 0-1.12.1-1.7.28-.54.16-.96.24-1.3.24-.58 0-1-.14-1.3-.64-.26-.4-.36-.76-.54-.98C5.36 21.38 3.3 20.66 3.3 19.6c0-.42.16-.78.5-1.06.48-.38 1.16-.44 1.78-.54.48-.08.9-.24 1.22-.5.24-.2.38-.44.44-.72-.42-.18-1.08-.52-1.68-1.02-.96-.78-1.6-1.82-1.88-3.12C2.64 12.52 2 12.06 2 11.5c0-.52.56-.96 1.5-1.1v-1.4c0-1.88.26-3.14.96-4.24C5.53 2.86 7.37 2 12 2Z"/></svg></a>
+            <a aria-label="TikTok" href="https://www.tiktok.com/@drmoamenbakr" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.13 2.57 5.7 5.7 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48Z"/></svg></a>
           </div>
         </div>
       </div>
@@ -1668,6 +1848,48 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
         <a class="pill pill-gold svc-modal-cta" href="#" onclick="closeSvcModal(); openWaModal(event);" data-i18n="svcModal.cta">Book Consultation</a>
         <a class="pill pill-outline svc-modal-page-link" id="svcModalPageLink" href="#" data-i18n="svcModal.learnMore">Learn More</a>
         <a class="pill pill-outline svc-modal-blog-link" id="svcModalBlogLink" href="#" data-i18n="svcModal.readArticle" style="display:none">Read Article</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= CASE POPUP MODAL ========================= -->
+<div class="case-overlay" id="caseOverlay">
+  <div class="case-popup">
+    <button class="case-popup-close" onclick="closeCasePopup()" aria-label="Close">
+      <i data-lucide="x"></i>
+    </button>
+    <div class="case-popup-img">
+      <img id="casePopupImg" src="" alt="Before and After">
+    </div>
+    <div class="case-popup-details" id="caseDetails">
+      <div class="case-details-toggle" onclick="toggleCaseDetails()">
+        <span data-i18n="case.toggle">Case Details</span>
+        <i data-lucide="chevron-up"></i>
+      </div>
+      <div class="case-popup-content">
+        <div class="case-popup-header">
+          <h3 data-i18n="case.title">Case Details</h3>
+          <a class="pill pill-gold" href="#" onclick="closeCasePopup(); openWaModal(event);" data-i18n="case.cta">Book Consultation</a>
+        </div>
+        <dl class="case-popup-table">
+        <div class="case-popup-row">
+          <dt data-i18n="case.procedure">Procedure</dt>
+          <dd id="caseProcedure"></dd>
+        </div>
+        <div class="case-popup-row">
+          <dt data-i18n="case.concern">Concern</dt>
+          <dd id="caseConcern"></dd>
+        </div>
+        <div class="case-popup-row">
+          <dt data-i18n="case.approach">Approach</dt>
+          <dd id="caseApproach"></dd>
+        </div>
+        <div class="case-popup-row">
+          <dt data-i18n="case.result">Result</dt>
+          <dd id="caseResult"></dd>
+        </div>
+      </dl>
       </div>
     </div>
   </div>
@@ -1823,6 +2045,47 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
   });
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && waOverlay.classList.contains('open')) closeWaModal();
+    if (e.key === 'Escape' && caseOverlay.classList.contains('open')) closeCasePopup();
+  });
+
+  // Case popup
+  var caseOverlay = document.getElementById('caseOverlay');
+  var casePopupImg = document.getElementById('casePopupImg');
+  var caseProcedure = document.getElementById('caseProcedure');
+  var caseConcern = document.getElementById('caseConcern');
+  var caseApproach = document.getElementById('caseApproach');
+  var caseResult = document.getElementById('caseResult');
+
+  function openCasePopup(frame) {
+    var lang = getCurrentLang();
+    var img = frame.dataset.caseImg;
+    casePopupImg.src = img;
+    caseProcedure.textContent = lang === 'ar' ? frame.dataset.caseProcedureAr : frame.dataset.caseProcedure;
+    caseConcern.textContent = lang === 'ar' ? frame.dataset.caseConcernAr : frame.dataset.caseConcern;
+    caseApproach.textContent = lang === 'ar' ? frame.dataset.caseApproachAr : frame.dataset.caseApproach;
+    caseResult.textContent = lang === 'ar' ? frame.dataset.caseResultAr : frame.dataset.caseResult;
+    caseOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (window.lucide) lucide.createIcons();
+  }
+  function closeCasePopup() {
+    caseOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('caseDetails').classList.remove('expanded');
+  }
+  function toggleCaseDetails() {
+    document.getElementById('caseDetails').classList.toggle('expanded');
+  }
+  caseOverlay.addEventListener('click', function(e) {
+    if (e.target === caseOverlay) closeCasePopup();
+  });
+
+  document.querySelectorAll('.view-case').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var frame = btn.closest('.compare-frame');
+      if (frame) openCasePopup(frame);
+    });
   });
 
   // Contact form submission via Web3Forms
@@ -1880,10 +2143,10 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       'nav.contactLink': 'تواصل',
       'nav.contact': 'تواصل معنا',
       'hero.title': 'إعادة تعريف الثقة<br>من خلال الدقة والخبرة',
-      'hero.sub': 'بقيادة <strong>د. مؤمن بكر</strong>، استشاري جراحة التجميل في الرياض بخبرة تزيد عن 14 عامًا، يقدم نتائج طبيعية ومتقنة وآمنة.',
+      'hero.sub': 'بقيادة <strong>د. مؤمن بكر</strong>، نائب أول جراحة التجميل في الرياض بخبرة تزيد عن 14 عامًا، يقدم نتائج طبيعية ومتقنة وآمنة.',
       'hero.cta': 'احجز استشارة',
       'hero.strip1': '+14 سنة خبرة',
-      'hero.strip2': 'استشاري جراحة',
+      'hero.strip2': 'نائب أول',
       'hero.strip3': 'خبرة دولية',
       'about.title': 'عن د. مؤمن بكر',
       'about.lede': '<strong>د. مؤمن بكر</strong> من أفضل أطباء التجميل في الرياض، بخبرة تزيد عن 14 عامًا في تقديم نتائج طبيعية ومتقنة. يجمع بين الدقة الجراحية المتقدمة والنهج المرتكز على المريض، ومتخصص في الإجراءات التجميلية والترميمية في المملكة العربية السعودية.',
@@ -1945,11 +2208,20 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
       'cred.lbl1': 'سنوات خبرة',
       'cred.val2': 'دكتوراه',
       'cred.lbl2': 'جراحة تجميلية',
-      'cred.val3': 'استشاري',
+      'cred.val3': 'نائب أول',
       'cred.lbl3': 'جراح تجميل',
-      'cred.val4': 'أستاذ مساعد',
+      'cred.val4': 'مدرس',
       'cred.lbl4': 'كلية الطب',
       'cred.aff2': 'جراح متطوع',
+      'case.title': 'تفاصيل الحالة',
+      'case.cta': 'احجز استشارة',
+      'case.procedure': 'الإجراء',
+      'case.concern': 'المشكلة',
+      'case.approach': 'الأسلوب',
+      'case.result': 'النتيجة',
+      'case.after': 'بعد',
+      'case.before': 'قبل',
+      'case.toggle': 'تفاصيل الحالة',
     }
   };
 
@@ -1962,11 +2234,11 @@ html[dir="rtl"] .pill i { transform: scaleX(-1); }
     if (lang === 'ar') {
       html.setAttribute('lang', 'ar');
       html.setAttribute('dir', 'rtl');
-      document.title = 'أفضل دكتور تجميل في الرياض | د. مؤمن بكر';
+      document.title = 'من أفضل أطباء التجميل في الرياض | د. مؤمن بكر';
     } else {
       html.setAttribute('lang', 'en');
       html.setAttribute('dir', 'ltr');
-      document.title = 'Dr. Moamen Bakr — Consultant Plastic Surgeon, Riyadh';
+      document.title = 'Dr. Moamen Bakr — Senior Registrar Plastic Surgeon, Riyadh';
     }
 
     // Toggle active state on lang buttons
