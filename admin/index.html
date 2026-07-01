@@ -221,6 +221,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     const badge = document.getElementById('changesBadge');
     const btn = document.getElementById('commitBtn');
     const dlBtn = document.getElementById('downloadBtn');
+    if (!badge) return;
     if (changeCount > 0) {
       badge.textContent = changeCount;
       badge.style.display = 'inline';
@@ -467,7 +468,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
     const btn = document.getElementById('commitBtn');
     btn.disabled = true;
-    btn.textContent = 'Saving...';
+    btn.childNodes[0].textContent = 'Saving... ';
 
     try {
       const html = getModifiedHTML();
@@ -521,7 +522,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
       showToast('Error: ' + err.message, true);
     } finally {
       btn.disabled = changeCount === 0;
-      btn.innerHTML = 'Save to GitHub<span class="changes-badge" id="changesBadge" style="' + (changeCount > 0 ? '' : 'display:none') + '">' + changeCount + '</span>';
+      btn.childNodes[0].textContent = 'Save to GitHub';
+      updateBadge();
     }
   });
 
