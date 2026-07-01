@@ -76,6 +76,43 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
   .dash-body { flex-direction: column; }
   .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e0e0e0; max-height: 160px; }
 }
+
+/* Service Cards Manager */
+.svc-manager-btn { display: none; background: #1E3932; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 12px; }
+.svc-manager-btn:hover { background: #2b4a42; }
+
+.svc-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 40px 20px; }
+.svc-modal-overlay.show { display: flex; }
+.svc-manager { background: #fff; border-radius: 12px; width: 100%; max-width: 800px; box-shadow: 0 8px 40px rgba(0,0,0,0.25); overflow: hidden; }
+.svc-manager-header { background: #1E3932; color: #fff; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; }
+.svc-manager-header h3 { font-size: 16px; font-weight: 600; margin: 0; }
+.svc-manager-close { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 18px; }
+.svc-manager-body { padding: 24px; max-height: 70vh; overflow-y: auto; }
+
+.svc-list { margin-bottom: 24px; }
+.svc-list-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f7f7f7; border-radius: 8px; margin-bottom: 8px; }
+.svc-list-item .svc-num { background: linear-gradient(135deg, #c6a77d, #dfc49d); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.svc-list-item .svc-info { flex: 1; }
+.svc-list-item .svc-info strong { font-size: 14px; color: #1E3932; display: block; }
+.svc-list-item .svc-info small { font-size: 12px; color: rgba(0,0,0,0.5); }
+.svc-list-item .svc-del { background: #fee; border: 1px solid #fcc; color: #d32f2f; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; }
+.svc-list-item .svc-del:hover { background: #fdd; }
+
+.svc-add-section { border-top: 1px solid #eee; padding-top: 20px; }
+.svc-add-section h4 { font-size: 15px; color: #1E3932; margin-bottom: 16px; }
+.svc-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.svc-form-row.full { grid-template-columns: 1fr; }
+.svc-form-group { display: flex; flex-direction: column; }
+.svc-form-group label { font-size: 12px; font-weight: 600; color: #333; margin-bottom: 4px; }
+.svc-form-group input, .svc-form-group textarea { padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; font-family: inherit; }
+.svc-form-group input:focus, .svc-form-group textarea:focus { outline: none; border-color: #1E3932; }
+.svc-form-group textarea { resize: vertical; min-height: 60px; }
+.svc-form-group .hint { font-size: 11px; color: rgba(0,0,0,0.4); margin-top: 3px; }
+.svc-form-group input[type="file"] { padding: 8px; background: #f9f9f9; }
+
+.svc-add-btn { background: #1E3932; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 16px; width: 100%; }
+.svc-add-btn:hover { background: #2b4a42; }
+.svc-add-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -121,6 +158,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     <div class="editor-frame-wrapper">
       <div class="editor-hint" id="editorHint">
         <strong>Editing mode:</strong> Click on any text in the page below to edit it. Changed text is highlighted in yellow.
+        <button class="svc-manager-btn" id="svcManagerBtn">Manage Service Cards</button>
       </div>
       <div class="editor-placeholder" id="editorPlaceholder">
         <div>
@@ -132,6 +170,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     </div>
   </div>
 </div>
+
+
 
 <!-- Settings Modal -->
 <div class="modal-overlay" id="settingsModal">
@@ -161,6 +201,99 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- Service Cards Manager Modal -->
+<div class="svc-modal-overlay" id="svcManagerOverlay">
+  <div class="svc-manager">
+    <div class="svc-manager-header">
+      <h3>Manage Service Cards</h3>
+      <button class="svc-manager-close" id="closeSvcManager">&times;</button>
+    </div>
+    <div class="svc-manager-body">
+      <div class="svc-list" id="svcList"></div>
+      <div class="svc-add-section">
+        <h4>+ Add New Service Card</h4>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Card Title (English)</label>
+            <input type="text" id="svcNewTitle" placeholder="e.g. Facelift &amp; Neck Lift">
+          </div>
+          <div class="svc-form-group">
+            <label>Card Title (Arabic)</label>
+            <input type="text" id="svcNewTitleAr" placeholder="e.g. شد الوجه والرقبة" dir="rtl">
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Card Short Description (English)</label>
+            <input type="text" id="svcNewCardDesc" placeholder="Short description shown on the card">
+          </div>
+          <div class="svc-form-group">
+            <label>Card Short Description (Arabic)</label>
+            <input type="text" id="svcNewCardDescAr" placeholder="وصف قصير يظهر على البطاقة" dir="rtl">
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Icon (.svg file)</label>
+            <input type="file" id="svcNewIcon" accept=".svg">
+            <span class="hint">SVG icon displayed on the card</span>
+          </div>
+          <div class="svc-form-group">
+            <label>Cover Photo (for popup)</label>
+            <input type="file" id="svcNewCover" accept="image/*">
+            <span class="hint">Image shown in the service popup</span>
+          </div>
+        </div>
+        <div class="svc-form-row full">
+          <div class="svc-form-group">
+            <label>Popup Description (English)</label>
+            <textarea id="svcNewDesc" placeholder="Detailed description shown in the popup modal"></textarea>
+          </div>
+        </div>
+        <div class="svc-form-row full">
+          <div class="svc-form-group">
+            <label>Popup Description (Arabic)</label>
+            <textarea id="svcNewDescAr" placeholder="وصف مفصّل يظهر في النافذة المنبثقة" dir="rtl"></textarea>
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Highlights (English, pipe-separated)</label>
+            <input type="text" id="svcNewHl" placeholder="e.g. Natural results|Quick recovery|Minimal scarring">
+            <span class="hint">Separate items with | character</span>
+          </div>
+          <div class="svc-form-group">
+            <label>Highlights (Arabic, pipe-separated)</label>
+            <input type="text" id="svcNewHlAr" placeholder="e.g. نتائج طبيعية|تعافٍ سريع|ندبات أقل" dir="rtl">
+            <span class="hint">افصل العناصر بحرف |</span>
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Page Link (English)</label>
+            <input type="text" id="svcNewPage" placeholder="e.g. en/facelift-riyadh.html">
+          </div>
+          <div class="svc-form-group">
+            <label>Page Link (Arabic)</label>
+            <input type="text" id="svcNewPageAr" placeholder="e.g. ar/شد-الوجه-الرياض.html" dir="rtl">
+          </div>
+        </div>
+        <div class="svc-form-row">
+          <div class="svc-form-group">
+            <label>Blog Link (English, optional)</label>
+            <input type="text" id="svcNewBlog" placeholder="e.g. en/blog/article.html">
+          </div>
+          <div class="svc-form-group">
+            <label>Blog Link (Arabic, optional)</label>
+            <input type="text" id="svcNewBlogAr" placeholder="e.g. ar/blog/مقال.html" dir="rtl">
+          </div>
+        </div>
+        <button class="svc-add-btn" id="svcAddBtn">Add Service Card</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 (function() {
@@ -340,6 +473,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
       // Inject editing behavior after content loads
       setTimeout(() => injectEditor(frameDoc), 400);
+      showSvcButton();
     } catch (err) {
       showToast('Error loading page: ' + err.message, true);
     }
@@ -494,7 +628,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
       if (getResp.ok) {
         const data = await getResp.json();
         sha = data.sha;
-      }
+      } 
 
       // Commit the file
       const body = {
@@ -559,6 +693,337 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
 
     showToast('Settings saved');
     document.getElementById('settingsModal').classList.remove('show');
+  });
+
+  // --- Service Cards Manager ---
+  let svcCards = []; // parsed from currentHTML
+
+  function isHomepage() {
+    return currentPage && currentPage.path === 'index.html';
+  }
+
+  function showSvcButton() {
+    const btn = document.getElementById('svcManagerBtn');
+    btn.style.display = isHomepage() ? 'inline-block' : 'none';
+  }
+
+  function parseSvcCards() {
+    svcCards = [];
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(currentHTML, 'text/html');
+    const cards = doc.querySelectorAll('.svc-grid .svc-card');
+    cards.forEach((card, i) => {
+      svcCards.push({
+        number: i + 1,
+        title: card.querySelector('.svc-card-title') ? card.querySelector('.svc-card-title').innerHTML : '',
+        desc: card.querySelector('.svc-card-desc') ? card.querySelector('.svc-card-desc').innerHTML : '',
+        iconSrc: card.querySelector('.svc-card-icon img') ? card.querySelector('.svc-card-icon img').getAttribute('src') : '',
+        iconAlt: card.querySelector('.svc-card-icon img') ? card.querySelector('.svc-card-icon img').getAttribute('alt') : '',
+        svcImg: card.getAttribute('data-svc-img') || '',
+        svcTitle: card.getAttribute('data-svc-title') || '',
+        svcTitleAr: card.getAttribute('data-svc-title-ar') || '',
+        svcDesc: card.getAttribute('data-svc-desc') || '',
+        svcDescAr: card.getAttribute('data-svc-desc-ar') || '',
+        svcHl: card.getAttribute('data-svc-hl') || '',
+        svcHlAr: card.getAttribute('data-svc-hl-ar') || '',
+        svcPage: card.getAttribute('data-svc-page') || '',
+        svcPageAr: card.getAttribute('data-svc-page-ar') || '',
+        svcBlog: card.getAttribute('data-svc-blog') || '',
+        svcBlogAr: card.getAttribute('data-svc-blog-ar') || '',
+        linkHref: card.querySelector('.svc-card-link') ? card.querySelector('.svc-card-link').getAttribute('href') : '',
+        linkPageAr: card.querySelector('.svc-card-link') ? card.querySelector('.svc-card-link').getAttribute('data-svc-page-ar') : '',
+        i18nTitle: card.querySelector('.svc-card-title') ? card.querySelector('.svc-card-title').getAttribute('data-i18n') : '',
+        i18nDesc: card.querySelector('.svc-card-desc') ? card.querySelector('.svc-card-desc').getAttribute('data-i18n') : '',
+      });
+    });
+  }
+
+  function renderSvcList() {
+    const list = document.getElementById('svcList');
+    if (svcCards.length === 0) {
+      list.innerHTML = '<p style="color:rgba(0,0,0,0.4);font-size:13px;">No service cards found.</p>';
+      return;
+    }
+    list.innerHTML = svcCards.map((card, i) => `
+      <div class="svc-list-item">
+        <span class="svc-num">${card.number}</span>
+        <div class="svc-info">
+          <strong>${card.svcTitle || card.title}</strong>
+          <small>${card.iconSrc}</small>
+        </div>
+        <button class="svc-del" data-idx="${i}">Remove</button>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.svc-del').forEach(btn => {
+      btn.addEventListener('click', () => removeSvcCard(parseInt(btn.dataset.idx)));
+    });
+  }
+
+  function removeSvcCard(idx) {
+    if (!confirm('Remove this service card?')) return;
+    svcCards.splice(idx, 1);
+    // Renumber
+    svcCards.forEach((c, i) => c.number = i + 1);
+    rebuildSvcHTML();
+    renderSvcList();
+    showToast('Card removed. Save to GitHub to apply.');
+  }
+
+  function buildCardHTML(card) {
+    const blogAttrs = card.svcBlog ? `\n      data-svc-blog="${card.svcBlog}"\n      data-svc-blog-ar="${card.svcBlogAr}"` : '';
+    const i18nTitle = card.i18nTitle || 'svc.custom' + card.number;
+    const i18nDesc = card.i18nDesc || 'svc.custom' + card.number + '.desc';
+    return `    <!-- ${card.number} — ${card.svcTitle} -->
+    <div class="svc-card" data-reveal="up"
+      data-svc-img="${card.svcImg}"
+      data-svc-title="${card.svcTitle}"
+      data-svc-title-ar="${card.svcTitleAr}"
+      data-svc-desc="${card.svcDesc}"
+      data-svc-desc-ar="${card.svcDescAr}"
+      data-svc-hl="${card.svcHl}"
+      data-svc-hl-ar="${card.svcHlAr}"
+      data-svc-page="${card.svcPage}"
+      data-svc-page-ar="${card.svcPageAr}"${blogAttrs}>
+      <span class="svc-card-number">${card.number}</span>
+      <div class="svc-card-icon"><img src="${card.iconSrc}" alt="${card.iconAlt}"></div>
+      <h3 class="svc-card-title" data-i18n="${i18nTitle}">${card.title}</h3>
+      <p class="svc-card-desc" data-i18n="${i18nDesc}">${card.desc}</p>
+      <a class="svc-card-link" href="${card.linkHref || card.svcPage}" data-svc-page-ar="${card.linkPageAr || card.svcPageAr}">
+        <span data-i18n="svc.explore">Explore Treatment</span>
+        <span class="svc-card-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+      </a>
+    </div>`;
+  }
+
+  function rebuildSvcHTML() {
+    // Build new svc-grid content
+    const cardsHTML = svcCards.map(c => buildCardHTML(c)).join('\n\n');
+    const newGrid = `  <div class="svc-grid" data-reveal-stagger>\n${cardsHTML}\n  </div>`;
+
+    // Replace svc-grid in currentHTML
+    const gridStart = currentHTML.indexOf('<div class="svc-grid"');
+    if (gridStart === -1) return;
+    // Find the closing </div> of svc-grid (after all cards)
+    let depth = 0;
+    let pos = gridStart;
+    let gridEnd = -1;
+    while (pos < currentHTML.length) {
+      if (currentHTML.substring(pos, pos + 4) === '<div') {
+        depth++;
+        pos += 4;
+      } else if (currentHTML.substring(pos, pos + 6) === '</div>') {
+        depth--;
+        if (depth === 0) {
+          gridEnd = pos + 6;
+          break;
+        }
+        pos += 6;
+      } else {
+        pos++;
+      }
+    }
+    if (gridEnd === -1) return;
+
+    currentHTML = currentHTML.substring(0, gridStart) + newGrid + currentHTML.substring(gridEnd);
+
+    // Update CSS: remove nth-child special rules and replace 6-col media query with 3-col centered
+    // Remove the nth-child(4), nth-child(5) block
+    const nthChildBlock = `.svc-grid .svc-card:nth-child(4),\n.svc-grid .svc-card:nth-child(5) {\n  grid-column: span 1;\n}\n`;
+    currentHTML = currentHTML.replace(nthChildBlock, '');
+
+    // Remove svc-grid::after block
+    const afterBlock = `.svc-grid::after {\n  content: '';\n  grid-column: 1;\n  display: none;\n}\n`;
+    currentHTML = currentHTML.replace(afterBlock, '');
+
+    // Replace the desktop media query with a clean 3-per-row layout
+    const oldMediaStart = currentHTML.indexOf('@media (min-width: 901px) {\n  .svc-grid {');
+    if (oldMediaStart !== -1) {
+      // Find the end of this media query block
+      let braceCount = 0;
+      let mPos = oldMediaStart;
+      let mediaEnd = -1;
+      for (let i = mPos; i < currentHTML.length; i++) {
+        if (currentHTML[i] === '{') braceCount++;
+        if (currentHTML[i] === '}') {
+          braceCount--;
+          if (braceCount === 0) {
+            mediaEnd = i + 1;
+            break;
+          }
+        }
+      }
+      if (mediaEnd !== -1) {
+        const newMedia = `@media (min-width: 901px) {\n  .svc-grid {\n    grid-template-columns: repeat(3, 1fr);\n    max-width: 1100px;\n  }\n}`;
+        currentHTML = currentHTML.substring(0, oldMediaStart) + newMedia + currentHTML.substring(mediaEnd);
+      }
+    }
+
+    changeCount++;
+    updateBadge();
+  }
+
+  async function uploadFileToGitHub(fileContent, fileName, isBase64) {
+    const repo = localStorage.getItem('gh_repo');
+    const token = localStorage.getItem('gh_token');
+    const branch = localStorage.getItem('gh_branch') || 'main';
+    const filePath = 'assets/' + fileName;
+    const encodedPath = filePath.split('/').map(s => encodeURIComponent(s)).join('/');
+
+    // Check if file exists
+    const getResp = await fetch(`https://api.github.com/repos/${repo}/contents/${encodedPath}?ref=${branch}`, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    let sha = '';
+    if (getResp.ok) {
+      const data = await getResp.json();
+      sha = data.sha;
+    }
+
+    const body = {
+      message: `Add asset: ${fileName}`,
+      content: isBase64 ? fileContent : btoa(unescape(encodeURIComponent(fileContent))),
+      branch: branch
+    };
+    if (sha) body.sha = sha;
+
+    const putResp = await fetch(`https://api.github.com/repos/${repo}/contents/${encodedPath}`, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (!putResp.ok) {
+      const err = await putResp.json();
+      throw new Error(err.message || 'Upload failed');
+    }
+    return filePath;
+  }
+
+  function readFileAsText(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
+  }
+
+  function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result.split(',')[1];
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Open service manager
+  document.getElementById('svcManagerBtn').addEventListener('click', () => {
+    parseSvcCards();
+    renderSvcList();
+    document.getElementById('svcManagerOverlay').classList.add('show');
+  });
+
+  document.getElementById('closeSvcManager').addEventListener('click', () => {
+    document.getElementById('svcManagerOverlay').classList.remove('show');
+  });
+
+  // Add service card
+  document.getElementById('svcAddBtn').addEventListener('click', async () => {
+    const title = document.getElementById('svcNewTitle').value.trim();
+    const titleAr = document.getElementById('svcNewTitleAr').value.trim();
+    const cardDesc = document.getElementById('svcNewCardDesc').value.trim();
+    const cardDescAr = document.getElementById('svcNewCardDescAr').value.trim();
+    const desc = document.getElementById('svcNewDesc').value.trim();
+    const descAr = document.getElementById('svcNewDescAr').value.trim();
+    const hl = document.getElementById('svcNewHl').value.trim();
+    const hlAr = document.getElementById('svcNewHlAr').value.trim();
+    const page = document.getElementById('svcNewPage').value.trim();
+    const pageAr = document.getElementById('svcNewPageAr').value.trim();
+    const blog = document.getElementById('svcNewBlog').value.trim();
+    const blogAr = document.getElementById('svcNewBlogAr').value.trim();
+    const iconFile = document.getElementById('svcNewIcon').files[0];
+    const coverFile = document.getElementById('svcNewCover').files[0];
+
+    if (!title || !cardDesc || !desc || !iconFile || !coverFile) {
+      showToast('Please fill in Title, Description, Icon, and Cover Photo', true);
+      return;
+    }
+
+    const btn = document.getElementById('svcAddBtn');
+    btn.disabled = true;
+    btn.textContent = 'Uploading files...';
+
+    try {
+      // Upload SVG icon
+      const svgContent = await readFileAsText(iconFile);
+      const iconFileName = 'svc-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '') + '.svg';
+      await uploadFileToGitHub(svgContent, iconFileName, false);
+
+      // Upload cover image
+      const coverBase64 = await readFileAsBase64(coverFile);
+      const coverExt = coverFile.name.split('.').pop().toLowerCase();
+      const coverFileName = 'service-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '') + '.' + coverExt;
+      await uploadFileToGitHub(coverBase64, coverFileName, true);
+
+      // Calculate next number
+      const nextNum = svcCards.length > 0 ? Math.max(...svcCards.map(c => c.number)) + 1 : 1;
+
+      // Build new card data
+      const newCard = {
+        number: nextNum,
+        title: title.replace(/&/g, '&amp;'),
+        desc: cardDesc,
+        iconSrc: 'assets/' + iconFileName,
+        iconAlt: title + ' icon',
+        svcImg: 'assets/' + coverFileName,
+        svcTitle: title.replace(/&/g, '&amp;'),
+        svcTitleAr: titleAr,
+        svcDesc: desc,
+        svcDescAr: descAr,
+        svcHl: hl,
+        svcHlAr: hlAr,
+        svcPage: page,
+        svcPageAr: pageAr,
+        svcBlog: blog,
+        svcBlogAr: blogAr,
+        linkHref: page,
+        linkPageAr: pageAr,
+        i18nTitle: 'svc.custom' + nextNum,
+        i18nDesc: 'svc.custom' + nextNum + '.desc',
+      };
+
+      svcCards.push(newCard);
+      rebuildSvcHTML();
+      renderSvcList();
+
+      // Clear form
+      document.getElementById('svcNewTitle').value = '';
+      document.getElementById('svcNewTitleAr').value = '';
+      document.getElementById('svcNewCardDesc').value = '';
+      document.getElementById('svcNewCardDescAr').value = '';
+      document.getElementById('svcNewDesc').value = '';
+      document.getElementById('svcNewDescAr').value = '';
+      document.getElementById('svcNewHl').value = '';
+      document.getElementById('svcNewHlAr').value = '';
+      document.getElementById('svcNewPage').value = '';
+      document.getElementById('svcNewPageAr').value = '';
+      document.getElementById('svcNewBlog').value = '';
+      document.getElementById('svcNewBlogAr').value = '';
+      document.getElementById('svcNewIcon').value = '';
+      document.getElementById('svcNewCover').value = '';
+
+      showToast('Service card added! Click "Save to GitHub" to publish.');
+    } catch (err) {
+      showToast('Error: ' + err.message, true);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Add Service Card';
+    }
   });
 
   // --- Init ---
