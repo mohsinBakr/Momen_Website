@@ -572,14 +572,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; back
     doc.head.appendChild(style);
 
     // Mark all text-bearing elements as editable
-    const selectors = 'h1, h2, h3, h4, h5, h6, p, li, td, th, figcaption, blockquote';
+    const selectors = 'h1, h2, h3, h4, h5, h6, p, li, td, th, figcaption, blockquote, [data-i18n], .contact-val';
     const elements = doc.querySelectorAll(selectors);
 
     elements.forEach(el => {
       if (el.closest('script, style, noscript')) return;
       if (!el.textContent || el.textContent.trim().length < 2) return;
       // Skip parent elements that contain other editable blocks (avoid nesting)
-      if (el.querySelector('h1,h2,h3,h4,h5,h6,p,li,td,th')) return;
+      if (el.querySelector('h1,h2,h3,h4,h5,h6,p,li,td,th,[data-i18n],.contact-val')) return;
 
       el.setAttribute('data-editable', 'true');
       el.setAttribute('data-original', el.innerHTML);
